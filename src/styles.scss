@@ -1,1 +1,20 @@
+@use '@angular/material' as mat;
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'styles/dialogs.scss';
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+// Fix for Material Dialog overlay
+.cdk-overlay-container {
+  z-index: 1000;
+}

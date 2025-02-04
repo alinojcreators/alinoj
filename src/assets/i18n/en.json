@@ -1,15 +1,77 @@
 {
-    "TOOLS": {
-      "TITLE": "Software Skills",
-      "DESCRIPTION": "Here are some software tools and technologies."
+  "HEADER": {
+    "HOME": "Home",
+    "SERVICES": "Services",
+    "ABOUT": "About",
+    "PORTFOLIO": "Portfolio",
+    "CONTACT": "Contact",
+    "LANGUAGE": "Language",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "PROFILE": "Profile",
+    "LOGOUT": "Logout",
+    "SERVICE1": "Service 1",
+    "SERVICE2": "Service 2"
+  },
+  "TOOLS": {
+    "TITLE": "Software Skills",
+    "DESCRIPTION": "Here are some software tools and technologies"
+  },
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "SUBTITLE": "We'd love to hear from you! Reach out to us via the form below or through our contact details.",
+    "GET_IN_TOUCH": "Get in Touch",
+    "FORM": {
+      "NAME": "Your Name",
+      "NAME_PLACEHOLDER": "Enter your name",
+      "EMAIL": "Your Email",
+      "EMAIL_PLACEHOLDER": "Enter your email",
+      "MESSAGE": "Your Message",
+      "MESSAGE_PLACEHOLDER": "Enter your message",
+      "SUBMIT": "Send Message",
+      "SENDING": "Sending...",
+      "SUCCESS": "Thank you for your message! We will get back to you soon.",
+      "ERROR": "Sorry, there was an error sending your message. Please try again later."
     },
-    "HEADER": {
-      "HOME": "Home",
-      "SERVICES": "Services",
-      "SERVICE1": "Service 1",
-      "SERVICE2": "Service 2",
-      "ABOUT": "About"
+    "VALIDATION": {
+      "NAME_REQUIRED": "Name is required",
+      "NAME_MIN_LENGTH": "Name must be at least 2 characters",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_INVALID": "Please enter a valid email address",
+      "MESSAGE_REQUIRED": "Message is required",
+      "MESSAGE_MIN_LENGTH": "Message must be at least 10 characters"
+    }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Login",
+      "EMAIL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter your email",
+      "PASSWORD": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter your password",
+      "PASSWORD_REQUIRED": "Password is required",
+      "PASSWORD_MINLENGTH": "Password must be at least 6 characters",
+      "SUBMIT": "Login",
+      "LOADING": "Logging in...",
+      "REGISTER_PROMPT": "Don't have an account?",
+      "REGISTER_LINK": "Register here",
+      "ERROR": "Invalid email or password"
+    },
+    "REGISTER": {
+      "TITLE": "Register",
+      "NAME": "Name",
+      "NAME_PLACEHOLDER": "Enter your name",
+      "EMAIL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter your email",
+      "PASSWORD": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter your password",
+      "PASSWORD_REQUIRED": "Password is required",
+      "PASSWORD_MINLENGTH": "Password must be at least 6 characters",
+      "SUBMIT": "Register",
+      "LOADING": "Registering...",
+      "LOGIN_PROMPT": "Already have an account?",
+      "LOGIN_LINK": "Login here",
+      "ERROR": "Registration failed"
     }
   }
-  
-  
+}

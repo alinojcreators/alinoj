@@ -1,64 +1,65 @@
-<header class="header">
-  <div class="header-container">
-    <!-- Brand/Logo -->
-    <a class="brand" routerLink="/">
-      <img src="assets/images/alinoj_logo.png" alt="Brand Logo" class="logo" />
-    </a>
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="container">
+    <div class="logo-section">
+      <a mat-button routerLink="/" class="logo">AlinoJ</a>
+      <button mat-icon-button (click)="toggleMenu()" class="menu-button">
+        <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
+    </div>
 
-    <!-- Hamburger Menu Button (Mobile) -->
-    <button
-      class="menu-toggle"
-      aria-label="Toggle menu"
-      (click)="toggleMenu()"
-    >
-      ☰
-    </button>
+    <div class="nav-links" [class.nav-links-open]="isMenuOpen">
+      <a mat-button routerLink="/about" routerLinkActive="active">
+        {{ 'HEADER.ABOUT' | translate }}
+      </a>
+      <a mat-button routerLink="/services" routerLinkActive="active">
+        {{ 'HEADER.SERVICES' | translate }}
+      </a>
+      <a mat-button routerLink="/portfolio" routerLinkActive="active">
+        {{ 'HEADER.PORTFOLIO' | translate }}
+      </a>
+      <a mat-button routerLink="/tools" routerLinkActive="active">
+        {{ 'HEADER.TOOLS' | translate }}
+      </a>
+      <a mat-button routerLink="/contact" routerLinkActive="active">
+        {{ 'HEADER.CONTACT' | translate }}
+      </a>
+    </div>
 
-    <!-- Navigation Menu -->
-    <nav [class.show]="menuOpen" class="nav" role="navigation">
-      <ul class="nav-list">
-        <!-- Home Link -->
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            {{ 'HEADER.HOME' | translate }}
-          </a>
-        </li>
+    <div class="right-section" [class.right-section-open]="isMenuOpen">
+      <button mat-button [matMenuTriggerFor]="languageMenu" class="language-button">
+        <mat-icon>language</mat-icon>
+        {{ 'HEADER.LANGUAGE' | translate }}
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <button mat-menu-item (click)="switchLanguage('en')">English</button>
+        <button mat-menu-item (click)="switchLanguage('ta')">தமிழ்</button>
+      </mat-menu>
 
-        <!-- Language Switcher -->
-        <li class="nav-item">
-          <button mat-button [matMenuTriggerFor]="languageMenu">
-            <mat-icon aria-hidden="false" fontIcon="language"></mat-icon>
-            {{ selectedLanguage === 'en' ? 'English' : 'தமிழ்' }}
+      <ng-container *ngIf="!isLoggedIn; else userMenu">
+        <button mat-button (click)="openLogin()" class="auth-button">
+          {{ 'HEADER.LOGIN' | translate }}
+        </button>
+        <button mat-raised-button (click)="openRegister()" color="accent" class="auth-button">
+          {{ 'HEADER.REGISTER' | translate }}
+        </button>
+      </ng-container>
+
+      <ng-template #userMenu>
+        <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+          <mat-icon>account_circle</mat-icon>
+          {{ username }}
+        </button>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            {{ 'HEADER.PROFILE' | translate }}
           </button>
-          <mat-menu #languageMenu="matMenu">
-            <button
-              mat-menu-item
-              *ngFor="let lang of languages"
-              (click)="switchLanguage(lang.code)"
-            >
-              {{ lang.label }}
-            </button>
-          </mat-menu>
-        </li>
-
-        
-
-        <!-- About Link -->
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/about"
-            routerLinkActive="active"
-          >
-            {{ 'HEADER.ABOUT' | translate }}
-          </a>
-        </li>
-      </ul>
-    </nav>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            {{ 'HEADER.LOGOUT' | translate }}
+          </button>
+        </mat-menu>
+      </ng-template>
+    </div>
   </div>
-</header>
+</mat-toolbar>

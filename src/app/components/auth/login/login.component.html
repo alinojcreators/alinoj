@@ -1,0 +1,45 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>{{ 'AUTH.LOGIN.TITLE' | translate }}</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'AUTH.LOGIN.EMAIL' | translate }}</mat-label>
+        <input matInput type="email" formControlName="email" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          {{ 'CONTACT.VALIDATION.EMAIL_REQUIRED' | translate }}
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+          {{ 'CONTACT.VALIDATION.EMAIL_INVALID' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'AUTH.LOGIN.PASSWORD' | translate }}</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" 
+               [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          {{ 'AUTH.LOGIN.PASSWORD_REQUIRED' | translate }}
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          {{ 'AUTH.LOGIN.PASSWORD_MINLENGTH' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
+        {{ (isLoading ? 'AUTH.LOGIN.LOADING' : 'AUTH.LOGIN.SUBMIT') | translate }}
+      </button>
+
+      <div class="register-link">
+        {{ 'AUTH.LOGIN.REGISTER_PROMPT' | translate }}
+        <a routerLink="/register">{{ 'AUTH.LOGIN.REGISTER_LINK' | translate }}</a>
+      </div>
+    </form>
+  </div>
+</div>

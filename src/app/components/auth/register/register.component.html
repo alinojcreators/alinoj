@@ -1,0 +1,56 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>{{ 'AUTH.REGISTER.TITLE' | translate }}</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'AUTH.REGISTER.NAME' | translate }}</mat-label>
+        <input matInput type="text" formControlName="name" [placeholder]="'AUTH.REGISTER.NAME_PLACEHOLDER' | translate">
+        <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+          {{ 'CONTACT.VALIDATION.NAME_REQUIRED' | translate }}
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('name')?.hasError('minlength')">
+          {{ 'CONTACT.VALIDATION.NAME_MIN_LENGTH' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'AUTH.REGISTER.EMAIL' | translate }}</mat-label>
+        <input matInput type="email" formControlName="email" [placeholder]="'AUTH.REGISTER.EMAIL_PLACEHOLDER' | translate">
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          {{ 'CONTACT.VALIDATION.EMAIL_REQUIRED' | translate }}
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+          {{ 'CONTACT.VALIDATION.EMAIL_INVALID' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'AUTH.REGISTER.PASSWORD' | translate }}</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+               [placeholder]="'AUTH.REGISTER.PASSWORD_PLACEHOLDER' | translate">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+          {{ 'AUTH.REGISTER.PASSWORD_REQUIRED' | translate }}
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          {{ 'AUTH.REGISTER.PASSWORD_MINLENGTH' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid || isLoading">
+        {{ (isLoading ? 'AUTH.REGISTER.LOADING' : 'AUTH.REGISTER.SUBMIT') | translate }}
+      </button>
+
+      <div class="login-link">
+        {{ 'AUTH.REGISTER.LOGIN_PROMPT' | translate }}
+        <a routerLink="/login">{{ 'AUTH.REGISTER.LOGIN_LINK' | translate }}</a>
+      </div>
+    </form>
+  </div>
+</div>

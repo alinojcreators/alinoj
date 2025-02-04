@@ -72,7 +72,22 @@
             &:focus {
               border-color: #00bcd4;
             }
+  
+            &.ng-invalid.ng-touched {
+              border-color: #dc3545;
+            }
           }
+  
+          textarea {
+            resize: vertical;
+            min-height: 120px;
+          }
+        }
+  
+        .error-message {
+          color: #dc3545;
+          font-size: 14px;
+          margin-top: 5px;
         }
   
         .btn {
@@ -87,6 +102,11 @@
   
           &:hover {
             background-color: #00509e;
+          }
+  
+          &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
           }
         }
       }
@@ -103,4 +123,3 @@
       }
     }
   }
-  

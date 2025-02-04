@@ -1,0 +1,131 @@
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #003366;
+  color: #fff;
+  z-index: 1000;
+  padding: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .brand {
+      flex: 1;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+
+      @media (max-width: 768px) {
+        display: block;
+      }
+    }
+
+    .nav {
+      flex: 2;
+      display: flex;
+      justify-content: flex-end;
+
+      @media (max-width: 768px) {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+
+        &.show {
+          display: flex;
+        }
+      }
+
+      .nav-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .nav-item {
+          position: relative;
+
+          .nav-link {
+            padding: 0.75rem 1rem;
+            color: #fff;
+            text-decoration: none;
+
+            &:hover {
+              background-color: #005599;
+            }
+
+            @media (max-width: 768px) {
+              text-align: left;
+              padding-left: 1rem;
+            }
+          }
+
+          &.dropdown {
+            .dropdown-menu {
+              display: none;
+              position: absolute;
+              top: 100%;
+              left: 0;
+              background-color: #003366;
+              color: #fff;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              padding: 1rem;
+              display: flex;
+              gap: 1rem;
+              min-width: 600px;
+
+              .dropdown-column {
+                h4 {
+                  margin-bottom: 0.5rem;
+                  font-size: 1rem;
+                  font-weight: bold;
+                }
+
+                ul {
+                  list-style: none;
+                  padding: 0;
+
+                  li {
+                    margin-bottom: 0.5rem;
+
+                    a {
+                      color: #fff;
+                      text-decoration: none;
+
+                      &:hover {
+                        text-decoration: underline;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            &:hover .dropdown-menu {
+              display: flex;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .logo {
+    width: 120px;
+    height: auto;
+  }
+}

@@ -1,0 +1,71 @@
+// Variables
+$primary-color: #003366;
+$secondary-color: #005599;
+$text-color: #fff;
+
+// Keyframe for text animation
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Keyframe for fade-in animation
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distributes space between text and image slider */
+  height: 100vh;
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  color: $text-color;
+  padding: 2rem;
+  overflow: hidden;
+
+  .animated-text {
+    width: 45%; /* Adjust width to prevent overlap */
+    text-align: left;
+    animation: slide-in 1s ease-out;
+
+    h1 {
+      font-size: 3rem;
+      margin: 0;
+      animation: fade-in 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      animation: fade-in 3s ease-in-out;
+    }
+  }
+
+  .image-slider {
+    width: 45%;
+    height: 600px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    animation: fade-in 2s ease-in-out;
+
+    .slider {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1s ease-in-out;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+<header class="header">
+  <div class="header-container">
+    <!-- Brand/Logo -->
+    <a class="brand" routerLink="/">
+      <img src="assets/images/alinoj_logo.png" alt="Brand Logo" class="logo" />
+    </a>
+
+    <!-- Hamburger Menu Button (Mobile) -->
+    <button
+      class="menu-toggle"
+      aria-label="Toggle menu"
+      (click)="toggleMenu()"
+    >
+      ☰
+    </button>
+
+    <!-- Navigation Menu -->
+    <nav [class.show]="menuOpen" class="nav" role="navigation">
+      <ul class="nav-list">
+        <!-- Home Link -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ 'HEADER.HOME' | translate }}
+          </a>
+        </li>
+
+        <!-- Language Switcher -->
+        <li class="nav-item">
+          <button mat-button [matMenuTriggerFor]="languageMenu">
+            <mat-icon aria-hidden="false" fontIcon="language"></mat-icon>
+            {{ selectedLanguage === 'en' ? 'English' : 'தமிழ்' }}
+          </button>
+          <mat-menu #languageMenu="matMenu">
+            <button
+              mat-menu-item
+              *ngFor="let lang of languages"
+              (click)="switchLanguage(lang.code)"
+            >
+              {{ lang.label }}
+            </button>
+          </mat-menu>
+        </li>
+
+        
+
+        <!-- About Link -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/about"
+            routerLinkActive="active"
+          >
+            {{ 'HEADER.ABOUT' | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,15 @@
+
+  <mat-card class="software-skills-card"  [@fadeIn]>
+    <mat-card-title>
+      <h2>{{ 'TOOLS.TITLE' | translate }}</h2>
+    </mat-card-title>
+    <mat-card-content>
+      <p>{{ 'TOOLS.DESCRIPTION' | translate }}</p>
+      <ul class="dev-icons">
+        <li *ngFor="let skill of skills" class="software-skill-inline">
+          <img [src]="skill.imageUrl" [alt]="skill.name" />
+        </li>
+      </ul>
+    
+    </mat-card-content>
+  </mat-card>

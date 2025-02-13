@@ -57,6 +57,9 @@ import { AuthService } from '../../../services/auth.service';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
+        <button mat-button (click)="onCancel()">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
         <button mat-button (click)="openRegister()">
           {{ 'AUTH.LOGIN.REGISTER_LINK' | translate }}
         </button>
@@ -131,6 +134,10 @@ export class LoginDialogComponent {
         }
       });
     }
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
 
   openRegister() {

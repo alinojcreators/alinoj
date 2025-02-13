@@ -1,0 +1,135 @@
+// Local variables and mixins
+:root {
+  // Color Palette
+  --primary-color: #3f51b5;
+  --secondary-color: #f50057;
+  --background-color: #ffffff;
+  --text-color: #333333;
+
+  // Spacing
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  // Typography
+  --font-weight-bold: 700;
+
+  // Breakpoints
+  --breakpoint-md: 768px;
+
+  // Transitions
+  --transition-fast: 0.2s ease;
+}
+
+// Local mixins
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin responsive-text($mobile, $desktop) {
+  font-size: $mobile;
+
+  @media (min-width: 768px) {
+    font-size: $desktop;
+  }
+}
+
+.app-footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-lg) 0;
+  margin-top: var(--spacing-xl);
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .footer-columns {
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+
+    @media (max-width: var(--breakpoint-md)) {
+      flex-direction: column;
+    }
+  }
+
+  .footer-column {
+    flex: 1;
+    min-width: 200px;
+
+    h4 {
+      @include responsive-text(0.9rem, 1rem);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-md);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.9);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: var(--spacing-sm);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: var(--spacing-sm);
+
+      a {
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+        gap: var(--spacing-sm);
+
+        mat-icon {
+          font-size: 1rem;
+          opacity: 0.7;
+        }
+
+        &:hover {
+          color: white;
+
+          mat-icon {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .social-links {
+    .social-icons {
+      display: flex;
+      gap: var(--spacing-md);
+
+      button {
+        color: rgba(255, 255, 255, 0.8);
+        transition: color var(--transition-fast);
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--spacing-md);
+  }
+}

@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "init-superadmin": "node scripts/init-superadmin.js",
+    "debug-login": "node scripts/debug-login.js",
+    "debug-superadmin": "node --trace-warnings scripts/init-superadmin.js",
+    "verify-superadmin": "node scripts/verify-superadmin.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

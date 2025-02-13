@@ -1,0 +1,201 @@
+<div class="category-container">
+  <header class="category-header">
+    <h1>{{categoryName}}</h1>
+  </header>
+
+  <!-- Search Bar - Moved to top for better visibility -->
+  <div class="search-container">
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label>Search Products</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Type to search...">
+      <mat-icon matPrefix>search</mat-icon>
+      <button mat-icon-button matSuffix *ngIf="searchControl.value" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Filters Sidebar -->
+    <aside class="filters-sidebar" [class.filters-open]="isFilterOpen">
+      <div class="filters-header">
+        <h2>Filters</h2>
+        <button mat-icon-button class="close-filters" (click)="toggleFilters()" *ngIf="isMobile">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <form [formGroup]="filterForm" class="filters-form">
+        <!-- Sort Dropdown -->
+        <div class="filter-section">
+          <h3>Sort By</h3>
+          <mat-button-toggle-group formControlName="sortBy" class="sort-toggles">
+            <mat-button-toggle *ngFor="let option of sortOptions" [value]="option.value">
+              {{option.label}}
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+
+        <!-- Price Range with Slider -->
+        <div class="filter-section">
+          <h3>Price Range</h3>
+          <div class="price-slider">
+            <mat-slider [min]="0" [max]="1000" [step]="10">
+              <input matSliderStartThumb formControlName="minPrice">
+              <input matSliderEndThumb formControlName="maxPrice">
+            </mat-slider>
+          </div>
+          <div class="price-inputs">
+            <mat-form-field appearance="outline">
+              <mat-label>Min</mat-label>
+              <input matInput type="number" formControlName="minPrice">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+            <span class="price-separator">-</span>
+            <mat-form-field appearance="outline">
+              <mat-label>Max</mat-label>
+              <input matInput type="number" formControlName="maxPrice">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Brands with Checkboxes -->
+        <div class="filter-section">
+          <h3>Brands</h3>
+          <div class="brands-list">
+            <mat-checkbox *ngFor="let brand of availableBrands" 
+                         [checked]="isBrandSelected(brand)"
+                         (change)="toggleBrand(brand)">
+              {{brand}}
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <!-- Tags as Chips -->
+        <div class="filter-section">
+          <h3>Tags</h3>
+          <mat-chip-listbox multiple selectable>
+            <mat-chip-option *ngFor="let tag of availableTags"
+                          [selected]="isTagSelected(tag)"
+                          (selectionChange)="toggleTag(tag)">
+              {{tag}}
+            </mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+
+        <!-- Clear Filters Button -->
+        <div class="filter-actions">
+          <button mat-stroked-button color="warn" (click)="clearFilters()" 
+                  [disabled]="!hasActiveFilters">
+            <mat-icon>filter_alt_off</mat-icon>
+            Clear All Filters
+          </button>
+        </div>
+      </form>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Mobile Filter Toggle -->
+      <button mat-stroked-button class="mobile-filter-toggle" (click)="toggleFilters()" *ngIf="isMobile">
+        <mat-icon>filter_list</mat-icon>
+        Filters
+        <mat-chip *ngIf="activeFiltersCount > 0" class="filter-count">{{activeFiltersCount}}</mat-chip>
+      </button>
+
+      <!-- Active Filters Display -->
+      <div class="active-filters" *ngIf="hasActiveFilters">
+        <mat-chip-listbox>
+          <mat-chip *ngIf="searchControl.value" (removed)="clearSearch()">
+            Search: {{searchControl.value}}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip>
+          <mat-chip *ngFor="let brand of selectedBrands" (removed)="toggleBrand(brand)">
+            {{brand}}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip>
+          <mat-chip *ngFor="let tag of selectedTags" (removed)="toggleTag(tag)">
+            {{tag}}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip>
+          <mat-chip *ngIf="hasPriceFilter" (removed)="clearPriceFilter()">
+            Price: ${{filterForm.get('minPrice')?.value || 0}} - ${{filterForm.get('maxPrice')?.value || 1000}}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" *ngIf="!loading">
+        <mat-card *ngFor="let product of products" class="product-card" [class.out-of-stock]="product.stock === 0">
+          <div class="product-image">
+            <img mat-card-image [src]="product.image" [alt]="product.name">
+            <div class="product-badges">
+              <span class="badge new" *ngIf="isNewProduct(product)">New</span>
+              <span class="badge sale" *ngIf="product.onSale || false">Sale</span>
+              <span class="badge out-of-stock" *ngIf="product.stock === 0">Out of Stock</span>
+            </div>
+          </div>
+          <mat-card-content>
+            <div class="product-brand">{{product.brand}}</div>
+            <h2>{{product.name}}</h2>
+            <p class="price">${{product.price}}</p>
+            <div class="rating">
+              <div class="stars">
+                <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                         [class.filled]="product.rating !== undefined && star <= product.rating"
+                         [class.half-filled]="product.rating !== undefined && star - 0.5 === product.rating">
+                  {{product.rating !== undefined && star <= product.rating ? 'star' : 
+                    (product.rating !== undefined && star - 0.5 === product.rating ? 'star_half' : 'star_border')}}
+                </mat-icon>
+              </div>
+              <span class="review-count">({{product.reviews}})</span>
+            </div>
+            <p class="description">{{product.description}}</p>
+            <div class="tags">
+              <mat-chip *ngFor="let tag of product.tags">{{tag}}</mat-chip>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="addToCart(product)"
+                    [disabled]="product.stock === 0">
+              <mat-icon>add_shopping_cart</mat-icon>
+              {{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}}
+            </button>
+            <button mat-icon-button [color]="isInWishlist(product) ? 'warn' : ''" 
+                    (click)="toggleWishlist(product)"
+                    [matTooltip]="isInWishlist(product) ? 'Remove from Wishlist' : 'Add to Wishlist'">
+              <mat-icon>{{isInWishlist(product) ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <!-- No Results Message -->
+      <div *ngIf="!loading && products.length === 0" class="no-results">
+        <mat-icon>search_off</mat-icon>
+        <h3>No Products Found</h3>
+        <p>Try adjusting your filters or search terms</p>
+        <button mat-stroked-button color="primary" (click)="clearFilters()">
+          Clear All Filters
+        </button>
+      </div>
+
+      <!-- Pagination -->
+      <mat-paginator
+        [length]="totalProducts"
+        [pageSize]="pageSize"
+        [pageIndex]="currentPage"
+        [pageSizeOptions]="[12, 24, 36, 48]"
+        (page)="onPageChange($event)"
+        *ngIf="totalProducts > 0">
+      </mat-paginator>
+    </main>
+  </div>
+</div>

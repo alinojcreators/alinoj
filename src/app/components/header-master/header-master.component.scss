@@ -1,0 +1,58 @@
+@import '../../../styles/mixins.scss';
+
+.header-master-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+
+  .header-form {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+
+    .form-actions {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+  }
+
+  .header-table {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+
+    .mat-column-select {
+      max-width: 50px;
+    }
+
+    .mat-column-actions {
+      max-width: 100px;
+      text-align: center;
+    }
+  }
+
+  // Responsive Design
+  @media (max-width: var(--breakpoint-md)) {
+    padding: var(--spacing-md);
+
+    .header-form {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Hover and Interaction Styles
+  .mat-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    transition: background-color 0.2s ease;
+  }
+
+  // Animation for Form Submission
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .mat-raised-button {
+    @include flex-center;
+  }
+}

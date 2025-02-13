@@ -1,0 +1,117 @@
+<div class="product-master-container">
+  <header class="header">
+    <h1>Product Management</h1>
+    <button mat-raised-button color="primary" (click)="openProductDialog()">
+      <mat-icon>add</mat-icon>
+      Add New Product
+    </button>
+  </header>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search Products</mat-label>
+      <input matInput (input)="onSearch($event)" [value]="searchTerm">
+      <mat-icon matPrefix>search</mat-icon>
+      <button mat-icon-button matSuffix *ngIf="searchTerm" (click)="searchTerm=''; onSearch($event)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+    <mat-table [dataSource]="products" matSort>
+      <!-- Image Column -->
+      <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <div class="product-image-container">
+            <img [src]="product.image" 
+                 [alt]="product.name" 
+                 class="product-image"
+                 (error)="product.image = 'assets/placeholder-image.png'"
+                 onerror="this.onerror=null; this.src='assets/placeholder-image.png';">
+            <div *ngIf="!product.image" class="no-image">No Image</div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.name}}</mat-cell>
+      </ng-container>
+
+      <!-- Brand Column -->
+      <ng-container matColumnDef="brand">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.brand}}</mat-cell>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.category}}</mat-cell>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+        <mat-cell *matCellDef="let product">${{product.price}}</mat-cell>
+      </ng-container>
+
+      <!-- Stock Column -->
+      <ng-container matColumnDef="stock">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Stock</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{product.stock}}</mat-cell>
+      </ng-container>
+
+      <!-- Rating Column -->
+      <ng-container matColumnDef="rating">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <div class="rating">
+            <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                     [class.filled]="star <= product.rating">
+              star
+            </mat-icon>
+            <span>({{product.reviews}})</span>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- On Sale Column -->
+      <ng-container matColumnDef="onSale">
+        <mat-header-cell *matHeaderCellDef>On Sale</mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <mat-icon [color]="product.onSale ? 'accent' : ''">
+            {{product.onSale ? 'local_offer' : 'remove'}}
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <button mat-icon-button color="primary" (click)="openProductDialog(product)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteProduct(product.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator
+      [length]="totalProducts"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      [pageIndex]="currentPage"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>

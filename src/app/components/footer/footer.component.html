@@ -1,0 +1,67 @@
+<footer class="app-footer">
+  <div class="footer-content">
+    <div class="footer-columns">
+      <!-- Company Links -->
+      <div class="footer-column">
+        <h4>{{ 'FOOTER.COMPANY' | translate }}</h4>
+        <ul>
+          <li *ngFor="let link of companyLinks">
+            <a [routerLink]="link.route">
+              <mat-icon>{{ link.icon }}</mat-icon>
+              {{ link.label | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Learning Links -->
+      <div class="footer-column">
+        <h4>{{ 'FOOTER.LEARNING' | translate }}</h4>
+        <ul>
+          <li *ngFor="let link of learningLinks">
+            <a [routerLink]="link.route">
+              <mat-icon>{{ link.icon }}</mat-icon>
+              {{ link.label | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Legal Links -->
+      <div class="footer-column">
+        <h4>{{ 'FOOTER.LEGAL' | translate }}</h4>
+        <ul>
+          <li *ngFor="let link of legalLinks">
+            <a [routerLink]="link.route">
+              <mat-icon>{{ link.icon }}</mat-icon>
+              {{ link.label | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Social Links -->
+      <div class="footer-column social-links">
+        <h4>{{ 'FOOTER.CONNECT' | translate }}</h4>
+        <div class="social-icons">
+          <button 
+            *ngFor="let social of socialLinks" 
+            mat-icon-button 
+            (click)="openSocialLink(social.url)"
+            [attr.aria-label]="social.icon + ' link'"
+          >
+            <mat-icon>{{ social.icon }}</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+      <p>
+        &copy; {{ currentYear }} AlinojCreators. 
+        {{ 'FOOTER.ALL_RIGHTS_RESERVED' | translate }}
+      </p>
+    </div>
+  </div>
+</footer>

@@ -71,6 +71,9 @@ import { AuthService } from '../../../services/auth.service';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
+        <button mat-button (click)="onCancel()">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
         <button mat-button (click)="openLogin()">
           {{ 'AUTH.REGISTER.LOGIN_LINK' | translate }}
         </button>
@@ -131,24 +134,30 @@ export class RegisterDialogComponent {
       
       const { name, email, password } = this.registerForm.value;
       
-      this.authService.register(name, email, password).subscribe({
-        next: () => {
-          this.dialogRef.close(true);
-        },
-        error: (error) => {
-          this.translate.get('AUTH.REGISTER.ERROR').subscribe((res: string) => {
-            this.errorMessage = res;
-          });
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      });
+      this.authService.register({ name, email, password })
+        .subscribe({
+          next: (user) => {
+            console.log('Registered successfully', user);
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            this.translate.get('AUTH.REGISTER.ERROR').subscribe((res: string) => {
+              this.errorMessage = res;
+            });
+            this.isLoading = false;
+          },
+          complete: () => {
+            this.isLoading = false;
+          }
+        });
     }
   }
 
   openLogin() {
     this.dialogRef.close('login');
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
 }

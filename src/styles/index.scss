@@ -1,0 +1,13 @@
+// Import all global styles and mixins
+@import './mixins.scss';
+
+// Re-export variables and mixins for easy importing in component styles
+:export {
+  primaryColor: var(--primary-color);
+  secondaryColor: var(--secondary-color);
+  accentColor: var(--accent-color);
+  
+  spacingXs: var(--spacing-xs);
+  spacingMd: var(--spacing-md);
+  spacingLg: var(--spacing-lg);
+}

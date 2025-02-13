@@ -8,6 +8,45 @@
     </div>
 
     <div class="nav-links" [class.nav-links-open]="isMenuOpen">
+      <!-- Shop Menu -->
+      <button mat-button 
+              [matMenuTriggerFor]="shopMenu" 
+              class="shop-button"
+              #shopMenuTrigger="matMenuTrigger">
+        <mat-icon>shopping_basket</mat-icon>
+        Shop
+      </button>
+      
+      <mat-menu #shopMenu="matMenu" 
+                class="shop-megamenu"
+                [overlapTrigger]="false"
+                [hasBackdrop]="true"
+                [xPosition]="'after'"
+                [yPosition]="'below'">
+        <div class="shop-dropdown" (click)="$event.stopPropagation()">
+          <div *ngFor="let category of ecommerceCategories" 
+               class="shop-category">
+            <div class="category-header">
+              <mat-icon>{{category.icon}}</mat-icon>
+              <span>{{category.name}}</span>
+            </div>
+            <div class="subcategories">
+              <a *ngFor="let sub of category.subcategories" 
+                 [routerLink]="sub.route" 
+                 class="subcategory-item">
+                <mat-icon>{{sub.icon}}</mat-icon>
+                <span>{{sub.name}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-menu>
+
+      <a mat-button routerLink="/shop" routerLinkActive="active" class="nav-link">
+        <mat-icon>store</mat-icon>
+        {{ 'HEADER.SHOP' | translate }}
+      </a>
+
       <a mat-button routerLink="/about" routerLinkActive="active">
         {{ 'HEADER.ABOUT' | translate }}
       </a>
@@ -23,9 +62,42 @@
       <a mat-button routerLink="/contact" routerLinkActive="active">
         {{ 'HEADER.CONTACT' | translate }}
       </a>
+      <button mat-button [matMenuTriggerFor]="courseMenu">
+        Courses
+      </button>
+      
+      <mat-menu #courseMenu="matMenu" class="full-width-menu courses-megamenu">
+        <div class="course-dropdown">
+          <ng-container *ngFor="let category of courseCategories">
+            <div class="course-category">
+              <mat-icon>{{ category.icon }}</mat-icon>
+              <span>{{ category.name }}</span>
+              <div class="subcategories">
+                <a *ngFor="let sub of category.subcategories" [routerLink]="sub.route">
+                  <mat-icon>{{ sub.icon }}</mat-icon>
+                  {{ sub.name }}
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-menu>
+      
     </div>
 
     <div class="right-section" [class.right-section-open]="isMenuOpen">
+      <button mat-icon-button routerLink="/wishlist" class="wishlist-button">
+        <mat-icon [matBadge]="wishlistItemCount" 
+                 [matBadgeHidden]="wishlistItemCount === 0"
+                 matBadgeColor="warn">favorite</mat-icon>
+      </button>
+      
+      <button mat-icon-button routerLink="/cart" class="cart-button">
+        <mat-icon [matBadge]="cartItemCount"
+                 [matBadgeHidden]="cartItemCount === 0"
+                 matBadgeColor="accent">shopping_cart</mat-icon>
+      </button>
+
       <button mat-button [matMenuTriggerFor]="languageMenu" class="language-button">
         <mat-icon>language</mat-icon>
         {{ 'HEADER.LANGUAGE' | translate }}
@@ -60,6 +132,19 @@
           </button>
         </mat-menu>
       </ng-template>
+
+      <ng-container *ngIf="isLoggedIn">
+        <a mat-button routerLink="/header-master" routerLinkActive="active">
+          <mat-icon>settings</mat-icon>
+          Header Management
+        </a>
+      </ng-container>
+      <ng-container *ngIf="isLoggedIn && username === 'superadmin'">
+        <a mat-button routerLink="/header-master" routerLinkActive="active">
+          <mat-icon>settings</mat-icon>
+          Header Management
+        </a>
+      </ng-container>
     </div>
   </div>
 </mat-toolbar>

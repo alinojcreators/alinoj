@@ -1,0 +1,159 @@
+// Global Variables
+:root {
+  // Color Palette
+  --primary-color: #3f51b5;
+  --secondary-color: #f50057;
+  --accent-color: #ff4081;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --text-muted: #666666;
+
+  // Typography
+  --font-family-base: 'Roboto', sans-serif;
+  --font-size-base: 16px;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  // Spacing
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  // Breakpoints
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+
+  // Shadows
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  // Transitions
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin box-shadow($level: 'md') {
+  @if $level == 'sm' {
+    box-shadow: var(--shadow-sm);
+  } @else if $level == 'md' {
+    box-shadow: var(--shadow-md);
+  } @else if $level == 'lg' {
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@mixin hover-effect {
+  transition: all var(--transition-fast);
+  
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+}
+
+@mixin responsive-text($mobile, $tablet, $desktop) {
+  font-size: $mobile;
+
+  @media (min-width: var(--breakpoint-sm)) {
+    font-size: $tablet;
+  }
+
+  @media (min-width: var(--breakpoint-lg)) {
+    font-size: $desktop;
+  }
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+  }
+}
+
+@mixin card {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  @include box-shadow('md');
+  padding: var(--spacing-md);
+  transition: all var(--transition-medium);
+
+  &:hover {
+    @include box-shadow('lg');
+  }
+}
+
+@mixin input-focus {
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.2);
+  }
+}
+
+// Utility Classes
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}

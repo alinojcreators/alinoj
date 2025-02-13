@@ -1,0 +1,135 @@
+<div class="header-master-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Header Management</mat-card-title>
+      <mat-card-subtitle>Create, Read, Update, and Delete Header Items</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Header Item Form -->
+      <form [formGroup]="headerForm" (ngSubmit)="createHeaderItem()" class="header-form">
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" placeholder="Enter header title">
+          <mat-error *ngIf="headerForm.get('title')?.invalid">
+            Title is required (max 100 characters)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea 
+            matInput 
+            formControlName="description" 
+            placeholder="Enter header description"
+            rows="3"
+          ></textarea>
+          <mat-error *ngIf="headerForm.get('description')?.invalid">
+            Description is required (max 500 characters)
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="headerForm.invalid"
+          >
+            {{ headerForm.get('id')?.value ? 'Update' : 'Create' }} Header
+          </button>
+          <button 
+            mat-button 
+            type="button" 
+            (click)="resetForm()"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+
+      <!-- Search Filter -->
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input 
+          matInput 
+          (keyup)="applyFilter($event)" 
+          placeholder="Search headers"
+        >
+      </mat-form-field>
+
+      <!-- Header Items Table -->
+      <table mat-table [dataSource]="dataSource" matSort class="header-table">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="$event ? toggleAllRows() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+          <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.createdAt | date:'medium' }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button 
+              mat-icon-button 
+              color="primary" 
+              (click)="editItem(element)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button 
+              mat-icon-button 
+              color="warn" 
+              (click)="deleteHeaderItem(element)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Paginator -->
+      <mat-paginator 
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

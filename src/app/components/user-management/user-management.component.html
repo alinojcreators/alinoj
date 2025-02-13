@@ -1,0 +1,141 @@
+<div class="user-management-container">
+  <mat-card *ngIf="currentUserRole === 'superadmin'">
+    <mat-card-header>
+      <mat-card-title>User Management</mat-card-title>
+      <mat-card-subtitle>Manage User Roles and Permissions</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- User Role Update Form -->
+      <form [formGroup]="userForm" (ngSubmit)="updateUserRole(userForm.value)" class="user-form">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="User Name" readonly>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="User Email" readonly>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roleOptions" [value]="role">
+              {{ role | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="userForm.invalid"
+          >
+            Update Role
+          </button>
+          <button 
+            mat-button 
+            type="button" 
+            (click)="resetForm()"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+
+      <!-- Search Filter -->
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input 
+          matInput 
+          (keyup)="applyFilter($event)" 
+          placeholder="Search users"
+        >
+      </mat-form-field>
+
+      <!-- Users Table -->
+      <table mat-table [dataSource]="dataSource" matSort class="users-table">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="$event ? toggleAllRows() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
+
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let element">{{ element.role | titlecase }}</td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.createdAt | date:'medium' }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button 
+              mat-icon-button 
+              color="primary" 
+              (click)="editUserRole(element)"
+              title="Edit User Role"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Paginator -->
+      <mat-paginator 
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Unauthorized Access Message -->
+  <mat-card *ngIf="currentUserRole !== 'superadmin'">
+    <mat-card-content>
+      <h2>Access Denied</h2>
+      <p>Only Superadmin can access User Management.</p>
+    </mat-card-content>
+  </mat-card>
+</div>

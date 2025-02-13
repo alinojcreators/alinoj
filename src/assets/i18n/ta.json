@@ -2,14 +2,16 @@
   "HEADER": {
     "HOME": "முகப்பு",
     "SERVICES": "சேவைகள்",
-    "ABOUT": "எங்களை பற்றி",
-    "PORTFOLIO": "போர்ட்ஃபோலியோ",
+    "ABOUT": "பற்றி",
+    "PORTFOLIO": "தொகுப்பு",
     "CONTACT": "தொடர்பு",
     "LANGUAGE": "மொழி",
     "LOGIN": "உள்நுழைய",
     "REGISTER": "பதிவு செய்ய",
     "PROFILE": "சுயவிவரம்",
-    "LOGOUT": "வெளியேறு"
+    "LOGOUT": "வெளியேறு",
+    "COURSES": "பாடநெறிகள்",
+    "TOOLS": "கருவிகள்"
   },
   "TOOLS": {
     "TITLE": "மென்பொருள் திறன்கள்",

@@ -89,28 +89,22 @@ export class AuthService {
   }
 
   register(userData: { name: string, email: string, password: string }): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/register`, userData).pipe(
+    return this.http.post<User>(`${this.apiUrl}/auth/register`, userData).pipe(
       catchError(this.handleError<User>('register'))
     );
   }
 
   // Login method
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
       tap(response => {
         // Store token in localStorage
         localStorage.setItem(this.tokenKey, response.token);
-        
-        // Store user details
+        // Store user in localStorage and update current user subject
         localStorage.setItem(this.userKey, JSON.stringify(response.user));
-        
-        // Set current user
         this.currentUserSubject.next(response.user);
       }),
-      catchError(error => {
-        console.error('Login error:', error);
-        return throwError(() => new Error('Login failed'));
-      })
+      catchError(this.handleError<LoginResponse>('login'))
     );
   }
 

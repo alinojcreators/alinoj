@@ -15,8 +15,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { ProductService, ProductFilter, ProductResponse } from '../../../../services/shop/product.service';
+import { CartService } from '../../../../services/shop/cart.services';
+import { WishlistService } from '../../../../services/shop/wishlist.service';
 import { Product } from '../../../../models/product.model';
 
 @Component({
@@ -52,6 +55,7 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
   pageSize = 12;
   isMobile = false;
   isFilterOpen = false;
+  wishlistItems: Set<string> = new Set();
 
   sortOptions = [
     { value: 'newest', label: 'Newest' },
@@ -66,7 +70,7 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
   availableTags: string[] = [];
   selectedBrands: string[] = [];
   selectedTags: string[] = [];
-  
+
   private destroy$ = new Subject<void>();
   private searchDebounce$ = new Subject<string>();
 
@@ -79,7 +83,10 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private snackBar: MatSnackBar
   ) {
     this.filterForm = this.fb.group({
       sortBy: ['newest'],
@@ -123,6 +130,8 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
       this.currentPage = 0;
       this.loadProducts();
     });
+
+    this.loadWishlist();
   }
 
   ngOnDestroy() {
@@ -235,13 +244,94 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
   }
 
   isInWishlist(product: Product): boolean {
-    // TODO: Implement wishlist check
-    return false;
+    const productId = product._id || product.id;
+    return productId ? this.wishlistItems.has(productId) : false;
   }
 
   toggleWishlist(product: Product) {
-    // TODO: Implement wishlist toggle
-    console.log('Toggle wishlist:', product);
+    const productId = product._id || product.id;
+    if (!productId) {
+      this.snackBar.open('Invalid product', 'Close', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (this.isInWishlist(product)) {
+      this.wishlistService.removeFromWishlist(productId).subscribe({
+        next: () => {
+          this.wishlistItems.delete(productId);
+          this.snackBar.open('Removed from wishlist', 'Close', {
+            duration: 3000
+          });
+        },
+        error: (error) => {
+          console.error('Error removing from wishlist:', error);
+          if (error.status === 401) {
+            this.snackBar.open('Please login to manage wishlist', 'Login', {
+              duration: 5000
+            }).onAction().subscribe(() => {
+              localStorage.setItem('redirectUrl', window.location.pathname);
+              this.router.navigate(['/login']);
+            });
+          } else {
+            this.snackBar.open(error.message || 'Failed to remove from wishlist', 'Close', {
+              duration: 3000
+            });
+          }
+        }
+      });
+    } else {
+      this.wishlistService.addToWishlist(product).subscribe({
+        next: () => {
+          this.wishlistItems.add(productId);
+          this.snackBar.open('Added to wishlist', 'Close', {
+            duration: 3000
+          });
+        },
+        error: (error) => {
+          console.error('Error adding to wishlist:', error);
+          if (error.status === 401) {
+            this.snackBar.open('Please login to manage wishlist', 'Login', {
+              duration: 5000
+            }).onAction().subscribe(() => {
+              localStorage.setItem('redirectUrl', window.location.pathname);
+              this.router.navigate(['/login']);
+            });
+          } else {
+            this.snackBar.open(error.message || 'Failed to add to wishlist', 'Close', {
+              duration: 3000
+            });
+          }
+        }
+      });
+    }
+  }
+
+  loadWishlist() {
+    this.wishlistService.getWishlistItems().subscribe({
+      next: (items) => {
+        this.wishlistItems = new Set(items.map(item => item._id || item.id || '').filter(id => id));
+      },
+      error: (error) => {
+        console.error('Error loading wishlist:', error);
+      }
+    });
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product).subscribe(
+      () => {
+        this.snackBar.open('Added to cart successfully', 'Close', {
+          duration: 3000
+        });
+      },
+      error => {
+        this.snackBar.open('Failed to add to cart', 'Close', {
+          duration: 3000
+        });
+      }
+    );
   }
 
   private loadFilterOptions() {
@@ -261,7 +351,7 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
   private loadProducts() {
     this.loading = true;
     const formValue = this.filterForm.value;
-    
+
     const filter: ProductFilter = {
       category: this.categoryName.toLowerCase(),
       search: this.searchControl.value || undefined,
@@ -294,10 +384,5 @@ export class ShopCategoryComponent implements OnInit, OnDestroy {
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
-  }
-
-  addToCart(product: Product) {
-    // TODO: Implement cart functionality
-    console.log('Adding to cart:', product);
   }
 }

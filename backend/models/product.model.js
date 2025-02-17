@@ -78,6 +78,32 @@ const productShippingSchema = new mongoose.Schema({
   cost: Number
 });
 
+const userRatingSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  },
+  comment: {
+    type: String,
+    trim: true
+  },
+  images: [{
+    url: String,
+    caption: String
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const productSchema = new mongoose.Schema({
   // Basic Information
   name: {
@@ -237,6 +263,19 @@ const productSchema = new mongoose.Schema({
   shipping: productShippingSchema,
 
   // Ratings & Reviews
+  userRatings: {
+    type: [userRatingSchema],
+    default: [],
+    validate: {
+      validator: function(ratings) {
+        // Check for unique userIds
+        const userIds = ratings.map(r => r.userId.toString());
+        const uniqueUserIds = new Set(userIds);
+        return userIds.length === uniqueUserIds.size;
+      },
+      message: 'Each user can only rate once'
+    }
+  },
   rating: {
     type: Number,
     default: 0,
@@ -245,7 +284,8 @@ const productSchema = new mongoose.Schema({
   },
   reviews: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
   reviewsData: [{
     id: String,

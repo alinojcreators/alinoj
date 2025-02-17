@@ -92,10 +92,10 @@
                  matBadgeColor="warn">favorite</mat-icon>
       </button>
       
-      <button mat-icon-button routerLink="/cart" class="cart-button">
-        <mat-icon [matBadge]="cartItemCount"
+      <button mat-icon-button (click)="navigateToCart()" class="cart-button">
+        <mat-icon [matBadge]="cartItemCount" 
                  [matBadgeHidden]="cartItemCount === 0"
-                 matBadgeColor="accent">shopping_cart</mat-icon>
+                 matBadgeColor="warn">shopping_cart</mat-icon>
       </button>
 
       <button mat-button [matMenuTriggerFor]="languageMenu" class="language-button">

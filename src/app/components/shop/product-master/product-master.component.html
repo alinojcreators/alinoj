@@ -30,7 +30,6 @@
                  class="product-image"
                  (error)="product.image = 'assets/placeholder-image.png'"
                  onerror="this.onerror=null; this.src='assets/placeholder-image.png';">
-            <div *ngIf="!product.image" class="no-image">No Image</div>
           </div>
         </mat-cell>
       </ng-container>
@@ -96,7 +95,7 @@
           <button mat-icon-button color="primary" (click)="openProductDialog(product)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteProduct(product.id)">
+          <button mat-icon-button color="warn" (click)="deleteProduct(product._id || product.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>

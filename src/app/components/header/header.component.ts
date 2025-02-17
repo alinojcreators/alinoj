@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 
 import { AuthService, User } from '../../services/auth.service';
 import { DialogService } from '../../services/dialog.service';
+import { CartService } from '../../services/shop/cart.services';
+import { WishlistService } from '@app/services/shop/wishlist.service';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +31,7 @@ import { DialogService } from '../../services/dialog.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
   isLoggedIn = false;
   isAdminUser = false;
   username = '';
@@ -112,8 +115,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private authService: AuthService,
     private dialogService: DialogService,
-    private router: Router
+    private cartService: CartService,
+    private router: Router,
+    private wishlistService: WishlistService
   ) {
+    this.subscriptions.push(
+      this.wishlistService.getWishlistItems().subscribe(items => {
+        this.wishlistItemCount = items.length;
+      })
+    );
+
     this.translateService.setTranslation('en', {
       HEADER: {
         HOME: 'Home',
@@ -130,6 +141,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.cartService.getCartCount().subscribe((count: number) => {
+        this.cartItemCount = count;
+      })
+    );
     this.authSubscription = this.authService.getCurrentUser().subscribe({
       next: (user) => {
         if (user) {
@@ -178,6 +194,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Unsubscribe to prevent memory leaks
+    this.subscriptions.forEach(sub => sub.unsubscribe());
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
@@ -231,5 +248,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       success => console.log('Navigation to Header Management successful'),
       error => console.error('Navigation to Header Management failed', error)
     );
+  }
+
+  navigateToCart() {
+    this.router.navigate(['/shop/cart']);
   }
 }

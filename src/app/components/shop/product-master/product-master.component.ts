@@ -68,96 +68,109 @@ export class ProductMasterComponent implements OnInit {
 
   loadProducts() {
     this.loading = true;
+    console.log('Loading products...');
     this.productService.getProducts({
       page: this.currentPage + 1,
       pageSize: this.pageSize,
       search: this.searchTerm || undefined
     }).pipe(
       catchError(error => {
+        console.error('Error loading products:', error);
         this.showError('Error loading products');
         return of({ items: [], total: 0, page: 1, pageSize: 10, totalPages: 0 });
       })
     ).subscribe(response => {
+      console.log('Raw response:', response);
       // Transform the image URLs to include the full backend URL
-      this.products = response.items.map(product => ({
-        ...product,
-        image: product.image ? 
-          (product.image.startsWith('http') ? product.image : `${environment.baseUrl}${product.image}`) : 
-          'assets/placeholder-image.png'
-      }));
+      this.products = response.items.map(product => {
+        console.log('Processing product:', product);
+        console.log('Media:', product.media);
+        
+        // Get image URL from media or use placeholder
+        let imageUrl = 'assets/placeholder-image.png';
+        if (product.media && product.media.length > 0) {
+          const primaryImage = product.media.find(m => m.isPrimary) || product.media[0];
+          imageUrl = primaryImage.url;
+        }
+        
+        const transformedProduct = {
+          ...product,
+          image: imageUrl
+        };
+        console.log('Transformed product:', transformedProduct);
+        return transformedProduct;
+      });
+      
+      console.log('Final transformed products:', this.products);
       this.totalProducts = response.total;
       this.loading = false;
     });
   }
 
   openProductDialog(product?: Product) {
-    const dialogData = product ? {
-      id: product.id,
-      name: product.name,
-      sku: product.sku,
-      brand: product.brand,
-      category: product.category,
-      costPrice: product.costPrice,
-      sellingPrice: product.sellingPrice,
-      taxRate: product.taxRate,
-      stock: product.stock,
-      reorderLevel: product.reorderLevel,
-      currency: product.currency,
-      description: product.description,
-      image: product.image,
-      tags: product.tags,
-      onSale: product.onSale
-    } : {};
-
     const dialogRef = this.dialog.open(ProductFormDialogComponent, {
-      width: '800px',
-      data: dialogData
+      width: '600px',
+      data: product ? { ...product } : {}
     });
 
-    dialogRef.afterClosed().subscribe((result: FormData | null) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const productId = product?.id;
-        
-        if (productId) {
-          this.productService.updateProduct(productId, result).pipe(
+        this.loading = true;
+        if (product) {
+          // Update existing product
+          const productId = product._id || product.id;
+          this.productService.updateProduct(productId!, result).pipe(
             catchError(error => {
-              const errorMessage = error.error?.message || 'Error updating product';
-              this.showError(errorMessage);
+              this.showError('Error updating product');
+              console.error('Update error:', error);
               return of(null);
             })
-          ).subscribe(response => {
-            if (response) {
+          ).subscribe(updatedProduct => {
+            if (updatedProduct) {
               this.showSuccess('Product updated successfully');
               this.loadProducts();
             }
+            this.loading = false;
           });
         } else {
+          // Create new product
           this.productService.createProduct(result).pipe(
             catchError(error => {
-              const errorMessage = error.error?.message || 'Error creating product';
-              this.showError(errorMessage);
+              this.showError('Error creating product');
+              console.error('Create error:', error);
               return of(null);
             })
-          ).subscribe(response => {
-            if (response) {
+          ).subscribe(newProduct => {
+            if (newProduct) {
               this.showSuccess('Product created successfully');
               this.loadProducts();
             }
+            this.loading = false;
           });
         }
       }
     });
   }
 
-  deleteProduct(id: string) {
+  deleteProduct(productId: string) {
+    if (!productId) {
+      this.showError('Invalid product ID');
+      return;
+    }
+
     if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(id).pipe(
+      this.loading = true;
+      console.log('Deleting product with ID:', productId);
+      this.productService.deleteProduct(productId).pipe(
         catchError(error => {
           this.showError('Error deleting product');
+          console.error('Delete error:', error);
           return of(null);
         })
-      ).subscribe(response => {
+      ).subscribe(() => {
         this.showSuccess('Product deleted successfully');
+        this.loadProducts();
+        this.loading = false;
       });
     }
   }

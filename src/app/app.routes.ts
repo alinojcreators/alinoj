@@ -16,6 +16,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { ShopCategoryComponent } from './components/shop/category/shop-category/shop-category.component';
 import { ProductMasterComponent } from './components/shop/product-master/product-master.component';
+import { CartComponent } from './components/shop/cart/cart.component';
+import { WishlistComponent } from './services/shop/wishlist/wishlist.component';
 
 export const routes: Routes = [
   { 
@@ -31,6 +33,19 @@ export const routes: Routes = [
   {
     path: 'admin/products',
     component: ProductMasterComponent
+  },
+  {
+    path: 'shop/cart',
+    component: CartComponent,
+    title: 'Shopping Cart'
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent
+  },
+  {
+    path: 'wishlist/shared/:shareCode',
+    component: WishlistComponent
   },
   
   { 

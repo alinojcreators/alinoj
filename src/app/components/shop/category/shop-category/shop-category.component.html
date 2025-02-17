@@ -132,43 +132,32 @@
       </div>
 
       <!-- Products Grid -->
-      <div class="products-grid" *ngIf="!loading">
-        <mat-card *ngFor="let product of products" class="product-card" [class.out-of-stock]="product.stock === 0">
-          <div class="product-image">
-            <img mat-card-image [src]="product.image" [alt]="product.name">
-            <div class="product-badges">
-              <span class="badge new" *ngIf="isNewProduct(product)">New</span>
-              <span class="badge sale" *ngIf="product.onSale || false">Sale</span>
-              <span class="badge out-of-stock" *ngIf="product.stock === 0">Out of Stock</span>
-            </div>
-          </div>
+      <div class="products-grid" *ngIf="!loading; else loadingTemplate">
+        <mat-card *ngFor="let product of products" class="product-card">
+          <img mat-card-image [src]="product.image" [alt]="product.name" class="product-image"
+               (error)="product.image = 'assets/placeholder-image.png'"
+               onerror="this.onerror=null; this.src='assets/placeholder-image.png';">
           <mat-card-content>
-            <div class="product-brand">{{product.brand}}</div>
-            <h2>{{product.name}}</h2>
-            <p class="price">${{product.price}}</p>
+            <h2 class="product-name">{{product.name}}</h2>
+            <p class="product-brand">{{product.brand}}</p>
+            <p class="product-price">₹{{ product.sellingPrice || product.price | number:'1.2-2' }}</p>
             <div class="rating">
-              <div class="stars">
-                <mat-icon *ngFor="let star of [1,2,3,4,5]" 
-                         [class.filled]="product.rating !== undefined && star <= product.rating"
-                         [class.half-filled]="product.rating !== undefined && star - 0.5 === product.rating">
-                  {{product.rating !== undefined && star <= product.rating ? 'star' : 
-                    (product.rating !== undefined && star - 0.5 === product.rating ? 'star_half' : 'star_border')}}
-                </mat-icon>
-              </div>
-              <span class="review-count">({{product.reviews}})</span>
-            </div>
-            <p class="description">{{product.description}}</p>
-            <div class="tags">
-              <mat-chip *ngFor="let tag of product.tags">{{tag}}</mat-chip>
+              <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                       [class.filled]="(product.rating || 0) >= star">
+                star
+              </mat-icon>
+              <span>({{product.reviews || 0}})</span>
             </div>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="addToCart(product)"
-                    [disabled]="product.stock === 0">
-              <mat-icon>add_shopping_cart</mat-icon>
-              {{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}}
+            <button mat-raised-button color="primary" 
+                    (click)="addToCart(product)"
+                    [disabled]="!product.stock"
+                    [matTooltip]="product.stock ? 'Add to Cart' : 'Out of Stock'">
+              <mat-icon>shopping_cart</mat-icon>
+              {{product.stock ? 'Add to Cart' : 'Out of Stock'}}
             </button>
-            <button mat-icon-button [color]="isInWishlist(product) ? 'warn' : ''" 
+            <button mat-icon-button color="accent" 
                     (click)="toggleWishlist(product)"
                     [matTooltip]="isInWishlist(product) ? 'Remove from Wishlist' : 'Add to Wishlist'">
               <mat-icon>{{isInWishlist(product) ? 'favorite' : 'favorite_border'}}</mat-icon>
@@ -176,6 +165,14 @@
           </mat-card-actions>
         </mat-card>
       </div>
+
+      <!-- Loading Template -->
+      <ng-template #loadingTemplate>
+        <div class="loading-container">
+          <mat-spinner></mat-spinner>
+          <p>Loading products...</p>
+        </div>
+      </ng-template>
 
       <!-- No Results Message -->
       <div *ngIf="!loading && products.length === 0" class="no-results">

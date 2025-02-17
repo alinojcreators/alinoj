@@ -89,6 +89,53 @@
         font-size: 0.875rem;
       }
     }
+
+    .rating-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .stars {
+        display: flex;
+        align-items: center;
+
+        .star-icon {
+          cursor: pointer;
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          color: #ccc;
+
+          &.filled {
+            color: #ffd700;
+          }
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+
+      .rating-value {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    mat-cell {
+      .mat-icon-button {
+        &[color="accent"] {
+          .mat-icon {
+            color: #ff4081;
+          }
+        }
+      }
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 8px;
+    }
   }
 }
 

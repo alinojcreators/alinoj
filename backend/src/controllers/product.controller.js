@@ -32,9 +32,9 @@ exports.getProducts = async (req, res) => {
 
     // Price range
     if (minPrice || maxPrice) {
-      query.price = {};
-      if (minPrice) query.price.$gte = Number(minPrice);
-      if (maxPrice) query.price.$lte = Number(maxPrice);
+      query.sellingPrice = {};
+      if (minPrice) query.sellingPrice.$gte = Number(minPrice);
+      if (maxPrice) query.sellingPrice.$lte = Number(maxPrice);
     }
 
     // Tags filter
@@ -52,7 +52,7 @@ exports.getProducts = async (req, res) => {
     if (sortBy) {
       switch (sortBy) {
         case 'price':
-          sort.price = sortOrder === 'desc' ? -1 : 1;
+          sort.sellingPrice = sortOrder === 'desc' ? -1 : 1;
           break;
         case 'rating':
           sort.rating = -1;
@@ -75,20 +75,16 @@ exports.getProducts = async (req, res) => {
       Product.countDocuments(query)
     ]);
 
-    // Transform products to ensure image paths are correct
+    // Transform products to include image URL from media
     const transformedProducts = products.map(product => {
       const productObj = product.toObject();
-      if (productObj.image) {
-        // Keep the path if it's already a full URL, otherwise construct it
-        if (!productObj.image.startsWith('http') && !productObj.image.startsWith('/uploads/')) {
-          productObj.image = `/uploads/products/${path.basename(productObj.image)}`;
-        }
-        console.log('Product image path:', productObj.image);
+      if (productObj.media && productObj.media.length > 0) {
+        const primaryImage = productObj.media.find(m => m.isPrimary) || productObj.media[0];
+        productObj.image = primaryImage.url;
       }
+      console.log('Transformed product:', productObj);
       return productObj;
     });
-
-    console.log('Sending transformed products:', transformedProducts);
 
     res.json({
       items: transformedProducts,
@@ -141,6 +137,19 @@ exports.createProduct = async (req, res) => {
     const productData = JSON.parse(JSON.stringify(req.body));
     console.log('Received product data:', productData);
     
+    // Handle file upload
+    if (req.file) {
+      const imagePath = `/uploads/products/${req.file.filename}`;
+      // Create media entry for the uploaded image
+      productData.media = [{
+        type: 'image',
+        url: imagePath,
+        alt: productData.name,
+        isPrimary: true
+      }];
+      console.log('Added media:', productData.media);
+    }
+
     // Convert string values to appropriate types
     productData.costPrice = Number(productData.costPrice);
     productData.sellingPrice = Number(productData.sellingPrice);
@@ -205,29 +214,18 @@ exports.createProduct = async (req, res) => {
       delete productData.seo;
     }
 
-    // Handle file upload
-    if (req.file) {
-      // Save the image path relative to the uploads directory
-      const filename = path.basename(req.file.path);
-      productData.image = `/uploads/products/${filename}`;
-      console.log('Saved image path:', productData.image);
-      console.log('Full image path:', path.join(__dirname, '../../', req.file.path));
-    } else {
-      console.log('No image file received');
-      throw new Error('Product image is required');
-    }
-
-    console.log('Final product data before save:', productData);
+    // Create the product
     const product = new Product(productData);
     await product.save();
     
-    // Return the complete product with full image URL
-    const savedProduct = product.toObject();
-    if (savedProduct.image) {
-      savedProduct.image = `/uploads/products/${path.basename(savedProduct.image)}`;
+    // Transform the response
+    const transformedProduct = product.toObject();
+    if (transformedProduct.media && transformedProduct.media.length > 0) {
+      transformedProduct.image = transformedProduct.media[0].url;
     }
     
-    res.status(201).json(savedProduct);
+    console.log('Created product:', transformedProduct);
+    res.status(201).json(transformedProduct);
   } catch (error) {
     console.error('Error creating product:', error);
     
@@ -303,12 +301,17 @@ exports.updateProduct = async (req, res) => {
 
     // Handle file upload
     if (req.file) {
-      productData.image = `/uploads/products/${req.file.filename}`;
+      productData.media = [{
+        type: 'image',
+        url: `/uploads/products/${req.file.filename}`,
+        alt: productData.name,
+        isPrimary: true
+      }];
       
       // Delete old image if it exists
       const oldProduct = await Product.findById(req.params.id);
-      if (oldProduct && oldProduct.image) {
-        const oldImagePath = path.join(__dirname, '../../', oldProduct.image);
+      if (oldProduct && oldProduct.media && oldProduct.media.length > 0) {
+        const oldImagePath = path.join(__dirname, '../../', oldProduct.media[0].url);
         await fs.unlink(oldImagePath).catch(console.error);
       }
     }

@@ -7,17 +7,28 @@ import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ToolsComponent } from './components/tools/tools.component';
 import { FooterComponent } from './components/footer/footer.component';
-
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ContactComponent, AboutComponent, ServicesComponent, HeaderComponent,DashboardComponent,ToolsComponent,PortfolioComponent,FooterComponent,CommonModule ,TranslateModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    ContactComponent,
+    AboutComponent,
+    ServicesComponent,
+    HeaderComponent,
+    DashboardComponent,
+    ToolsComponent,
+    PortfolioComponent,
+    FooterComponent,
+    TranslateModule
+  ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   constructor(private translate: TranslateService) {

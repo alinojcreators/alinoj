@@ -1,0 +1,664 @@
+{
+  "courses": [
+   
+    {
+      "id": "angular-level1-fundamentals",
+      "title": "Angular Level 1: Fundamentals",
+      "category": "Frontend Development",
+      "subcategory": "Angular",
+      "description": "Start your Angular journey with a solid foundation. This beginner-friendly course covers all the essential concepts of Angular, from basic components to services and routing. Perfect for developers new to Angular or those transitioning from other frameworks.",
+      "level": "Beginner",
+      "duration": "4 weeks",
+      "language": "English",
+      "highlights": [
+        "Build your first Angular application from scratch",
+        "Master component basics and data binding",
+        "Learn Angular CLI and development workflow",
+        "Understand services and dependency injection",
+        "Introduction to routing and navigation",
+        "Forms handling and validation basics",
+        "Best practices for beginners"
+      ],
+      "syllabus": [
+        {
+          "title": "Module 1: Getting Started with Angular",
+          "topics": [
+            "Understanding Angular architecture",
+            "Setting up development environment",
+            "Angular CLI basics",
+            "Creating your first component"
+          ]
+        },
+        {
+          "title": "Module 2: Components & Templates",
+          "topics": [
+            "Component lifecycle hooks",
+            "Data binding techniques",
+            "Template syntax and directives",
+            "Pipes for data transformation"
+          ]
+        },
+        {
+          "title": "Module 3: Services & Dependency Injection",
+          "topics": [
+            "Creating and using services",
+            "Dependency injection fundamentals",
+            "HTTP client basics",
+            "Observable introduction"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "Task Manager Application",
+          "description": "Build a simple task management application to practice components and data binding"
+        },
+        {
+          "title": "Weather Dashboard",
+          "description": "Create a weather dashboard using HTTP client and services"
+        }
+      ],
+      "price": 199,
+      "instructor": {
+        "name": "Sarah Johnson",
+        "title": "Angular Developer",
+        "bio": "5+ years of experience in Angular development. Certified Angular trainer.",
+        "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiM0MkE1RjUiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjMTk3NkQyIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+      }
+    },
+    {
+      "id": "angular-level2-intermediate",
+      "title": "Angular Level 2: Intermediate",
+      "category": "Frontend Development",
+      "subcategory": "Angular",
+      "description": "Take your Angular skills to the next level. This intermediate course dives deep into advanced components, state management, performance optimization, and testing. Ideal for developers who understand Angular basics and want to build more complex applications.",
+      "level": "Intermediate",
+      "duration": "6 weeks",
+      "language": "English",
+      "highlights": [
+        "Advanced component patterns",
+        "State management with NgRx",
+        "Performance optimization techniques",
+        "Unit testing and E2E testing",
+        "Advanced routing strategies",
+        "Real-time updates with WebSockets",
+        "Error handling and debugging"
+      ],
+      "syllabus": [
+        {
+          "title": "Module 1: Advanced Components",
+          "topics": [
+            "Content projection",
+            "Dynamic components",
+            "Component communication patterns",
+            "Custom directives and pipes"
+          ]
+        },
+        {
+          "title": "Module 2: State Management",
+          "topics": [
+            "Introduction to NgRx",
+            "Actions and reducers",
+            "Effects and selectors",
+            "State management best practices"
+          ]
+        },
+        {
+          "title": "Module 3: Testing & Optimization",
+          "topics": [
+            "Unit testing with Jasmine",
+            "E2E testing with Cypress",
+            "Lazy loading",
+            "Change detection strategies"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "E-commerce Dashboard",
+          "description": "Build an e-commerce admin dashboard with NgRx state management"
+        },
+        {
+          "title": "Real-time Chat Application",
+          "description": "Create a chat application with WebSocket integration"
+        }
+      ],
+      "price": 299,
+      "instructor": {
+        "name": "Michael Chen",
+        "title": "Senior Angular Developer",
+        "bio": "8+ years of experience in Angular. Former Google Developer Expert.",
+        "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiM3QzRERkYiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjNjczQUIzIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+      }
+    },
+    {
+      "id": "angular-level3-advanced",
+      "title": "Angular Level 3: Advanced",
+      "category": "Frontend Development",
+      "subcategory": "Angular",
+      "description": "Master advanced Angular concepts and enterprise-level application development. This expert-level course covers micro-frontends, advanced state management, custom libraries, and enterprise architecture patterns. For experienced Angular developers ready to build large-scale applications.",
+      "level": "Advanced",
+      "duration": "8 weeks",
+      "language": "English",
+      "highlights": [
+        "Micro-frontend architecture",
+        "Custom library development",
+        "Advanced NgRx patterns",
+        "Enterprise-level testing strategies",
+        "CI/CD and deployment",
+        "Security best practices",
+        "Performance optimization at scale"
+      ],
+      "syllabus": [
+        {
+          "title": "Module 1: Enterprise Architecture",
+          "topics": [
+            "Micro-frontend implementation",
+            "Module federation",
+            "Scalable application architecture",
+            "Advanced dependency injection"
+          ]
+        },
+        {
+          "title": "Module 2: Advanced State Management",
+          "topics": [
+            "Complex NgRx patterns",
+            "State normalization",
+            "Entity adapter patterns",
+            "State persistence strategies"
+          ]
+        },
+        {
+          "title": "Module 3: Performance & Deployment",
+          "topics": [
+            "Advanced build optimization",
+            "Server-side rendering",
+            "Progressive Web Apps",
+            "Containerization and deployment"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "Enterprise CRM System",
+          "description": "Build a full-featured CRM system with micro-frontend architecture"
+        },
+        {
+          "title": "Custom Component Library",
+          "description": "Develop and publish a reusable component library"
+        }
+      ],
+      "price": 499,
+      "instructor": {
+        "name": "Emily Rodriguez",
+        "title": "Enterprise Angular Architect",
+        "bio": "12+ years in enterprise Angular development. Angular GDE and conference speaker.",
+        "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiM0Q0FGNTAiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjMzg4RTNCIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+      }
+    },
+    {
+      "id": "react-level1-essentials",
+      "title": "React Level 1: Modern React Essentials",
+      "category": "Frontend Development",
+      "subcategory": "React",
+      "description": "Master modern React 18+ with hooks, context, and functional components. Perfect for beginners looking to build interactive web applications with React's latest features and best practices.",
+      "level": "Beginner",
+      "duration": "4 weeks",
+      "language": "English",
+      "highlights": [
+        "Modern React with Hooks",
+        "Functional Components",
+        "JSX and Virtual DOM",
+        "State and Props Management",
+        "React Router for Navigation",
+        "Forms and User Input",
+        "Error Boundaries and Debugging"
+      ],
+      "syllabus": [
+        {
+          "title": "Module 1: React Fundamentals",
+          "topics": [
+            "Introduction to React and its ecosystem",
+            "Setting up development environment",
+            "JSX syntax and expressions",
+            "Components and props"
+          ]
+        },
+        {
+          "title": "Module 2: Hooks and State",
+          "topics": [
+            "useState and useEffect hooks",
+            "Custom hooks development",
+            "Component lifecycle with hooks",
+            "Context API basics"
+          ]
+        },
+        {
+          "title": "Module 3: Routing and Forms",
+          "topics": [
+            "React Router setup and configuration",
+            "Route parameters and nested routes",
+            "Form handling with React",
+            "Input validation and error handling"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "Todo Application",
+          "description": "Build a feature-rich todo app with CRUD operations and filtering"
+        },
+        {
+          "title": "Movie Browser",
+          "description": "Create a responsive movie browsing application with search functionality"
+        }
+      ],
+      "price": 199,
+      "instructor": {
+        "name": "David Wilson",
+        "title": "React Developer",
+        "bio": "6+ years of React development experience. Creator of popular React tutorials.",
+        "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4="
+      },
+      "targetAudience": [
+        "JavaScript developers new to React",
+        "Web developers wanting to learn modern React",
+        "Students interested in frontend development"
+      ],
+      "schedule": {
+        "duration": "4 weeks",
+        "sessionsPerWeek": 3,
+        "sessionDuration": "2 hours",
+        "batchTypes": [
+          "Weekend Batch (Sat-Sun)",
+          "Weekday Evening Batch (Mon-Wed-Fri)"
+        ]
+      },
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4="
+    },
+    {
+      "id": "react-level2-advanced",
+      "title": "React Level 2: Advanced Patterns",
+      "category": "Frontend Development",
+      "subcategory": "React",
+      "description": "Dive deep into advanced React patterns, state management, and performance optimization. Learn to build scalable applications using Redux Toolkit, React Query, and modern architectural patterns.",
+      "level": "Intermediate",
+      "duration": "6 weeks",
+      "language": "English",
+      "highlights": [
+        "Advanced State Management with Redux Toolkit",
+        "Server State with React Query",
+        "Performance Optimization Techniques",
+        "Custom Hooks and Patterns",
+        "Testing with React Testing Library",
+        "Code Splitting and Lazy Loading",
+        "TypeScript Integration"
+      ],
+      "syllabus": [
+        {
+          "title": "Module 1: Advanced State Management",
+          "topics": [
+            "Redux Toolkit setup and best practices",
+            "RTK Query for API integration",
+            "React Query for server state",
+            "Complex state patterns"
+          ]
+        },
+        {
+          "title": "Module 2: Performance Optimization",
+          "topics": [
+            "React.memo and useMemo",
+            "useCallback optimization",
+            "Code splitting strategies",
+            "Performance monitoring"
+          ]
+        },
+        {
+          "title": "Module 3: Testing and TypeScript",
+          "topics": [
+            "Unit testing with React Testing Library",
+            "Integration testing strategies",
+            "TypeScript with React",
+            "Type-safe components and hooks"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "E-commerce Platform",
+          "description": "Build a full-featured e-commerce platform with Redux Toolkit and React Query"
+        },
+        {
+          "title": "Social Media Dashboard",
+          "description": "Create a performant social media dashboard with real-time updates"
+        }
+      ],
+      "price": 299,
+      "instructor": {
+        "name": "Alex Turner",
+        "title": "Senior React Developer",
+        "bio": "10+ years in React development. Author of React performance optimization guides.",
+        "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjMDBCNEQ4Ii8+CiAgPGcgc3Ryb2tlPSIjMDBCNEQ4IiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4="
+      },
+      "targetAudience": [
+        "Experienced React developers",
+        "Frontend developers working on complex applications",
+        "Developers focusing on performance optimization"
+      ],
+      "schedule": {
+        "duration": "6 weeks",
+        "sessionsPerWeek": 3,
+        "sessionDuration": "2 hours",
+        "batchTypes": [
+          "Weekend Batch (Sat-Sun)",
+          "Weekday Evening Batch (Tue-Thu)"
+        ]
+      },
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjMDBCNEQ4Ii8+CiAgPGcgc3Ryb2tlPSIjMDBCNEQ4IiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4="
+    },
+    {
+      "id": "react-level3-enterprise",
+      "title": "React Level 3: Enterprise Architecture",
+      "category": "Frontend Development",
+      "subcategory": "React",
+      "description": "Master enterprise-level React development with advanced architectural patterns, micro-frontends, and scalable state management solutions. Learn to build and maintain large-scale React applications.",
+      "level": "Advanced",
+      "duration": "8 weeks",
+      "language": "English",
+      "highlights": [
+        "Micro-frontend Architecture",
+        "Module Federation",
+        "Advanced State Management Patterns",
+        "Enterprise Testing Strategies",
+        "CI/CD for React Applications",
+        "Monorepo Management",
+        "Performance at Scale"
+      ],
+      "syllabus": [
+        {
+          "title": "Module 1: Enterprise Architecture",
+          "topics": [
+            "Micro-frontend implementation",
+            "Module Federation setup",
+            "Monorepo with Nx/Turborepo",
+            "Scalable folder structure"
+          ]
+        },
+        {
+          "title": "Module 2: Advanced State Solutions",
+          "topics": [
+            "Redux Toolkit at scale",
+            "Zustand for global state",
+            "State persistence strategies",
+            "Real-time data synchronization"
+          ]
+        },
+        {
+          "title": "Module 3: Enterprise Testing",
+          "topics": [
+            "Testing strategies for large apps",
+            "E2E testing with Cypress",
+            "Visual regression testing",
+            "Performance testing"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "Enterprise Dashboard",
+          "description": "Build a scalable enterprise dashboard with micro-frontend architecture"
+        },
+        {
+          "title": "Design System",
+          "description": "Create a comprehensive design system with Storybook and testing"
+        }
+      ],
+      "price": 499,
+      "instructor": {
+        "name": "Sophie Chen",
+        "title": "React Architecture Consultant",
+        "bio": "15+ years in enterprise React development. Conference speaker and architecture consultant.",
+        "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjMDA3QUNDII8+CiAgPGcgc3Ryb2tlPSIjMDA3QUNDIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4="
+      },
+      "targetAudience": [
+        "Senior React developers",
+        "Technical architects",
+        "Team leads managing large React applications"
+      ],
+      "schedule": {
+        "duration": "8 weeks",
+        "sessionsPerWeek": 2,
+        "sessionDuration": "3 hours",
+        "batchTypes": [
+          "Weekend Intensive (Sat-Sun)",
+          "Weekday Evening Advanced (Tue-Thu)"
+        ]
+      },
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjMDA3QUNDII8+CiAgPGcgc3Ryb2tlPSIjMDA3QUNDIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4="
+    },
+    {
+      "id": "vuejs-complete-2024",
+      "title": "Vue.js Complete Developer Course 2024",
+      "category": "Frontend Development",
+      "subcategory": "Vue.js",
+      "description": "Master Vue.js 3 with Composition API, Vuex, Vue Router, and TypeScript. Build real-world applications from scratch with the latest Vue ecosystem tools.",
+      "level": "All Levels",
+      "duration": "10 weeks",
+      "language": "English",
+      "highlights": [
+        "Learn Vue.js 3 from ground up",
+        "Master Composition API & Options API",
+        "State Management with Vuex/Pinia",
+        "Vue Router for SPA navigation",
+        "TypeScript integration",
+        "Testing with Vue Test Utils",
+        "Performance optimization",
+        "Real-world project development"
+      ],
+      "image": "https://vuejs.org/images/logo.png",
+      "price": 299,
+      "instructor": {
+        "name": "Sarah Chen",
+        "title": "Senior Vue.js Developer",
+        "bio": "8+ years of experience in Vue.js and Frontend Development",
+        "image": "https://randomuser.me/api/portraits/women/44.jpg"
+      }
+    },
+    {
+      "id": "web-fundamentals-2024",
+      "title": "Web Development Fundamentals: HTML5, CSS3 & JavaScript",
+      "category": "Frontend Development",
+      "subcategory": "Web Fundamentals",
+      "description": "Build a strong foundation in web development with modern HTML5, CSS3, and JavaScript. Learn responsive design, animations, and modern JavaScript features.",
+      "level": "Beginner",
+      "duration": "12 weeks",
+      "language": "English",
+      "highlights": [
+        "Modern HTML5 features and semantics",
+        "CSS3 layouts and animations",
+        "JavaScript ES6+ features",
+        "Responsive web design",
+        "CSS frameworks (Bootstrap, Tailwind)",
+        "DOM manipulation",
+        "Web APIs and AJAX",
+        "Build portfolio projects"
+      ],
+      "image": "https://cdn.pixabay.com/photo/2019/10/09/07/28/development-4536630_960_720.png",
+      "price": 249,
+      "instructor": {
+        "name": "Mike Johnson",
+        "title": "Frontend Development Expert",
+        "bio": "12+ years of experience in web development and teaching",
+        "image": "https://randomuser.me/api/portraits/men/32.jpg"
+      }
+    },
+    {
+      "id": "mean-stack-2024",
+      "title": "MEAN Stack Development Bootcamp",
+      "category": "Full Stack Development",
+      "subcategory": "MEAN Stack",
+      "description": "Build full-stack applications using MongoDB, Express.js, Angular, and Node.js. Learn to develop, test, and deploy modern web applications.",
+      "level": "Intermediate",
+      "duration": "16 weeks",
+      "language": "English",
+      "highlights": [
+        "MongoDB database design",
+        "Express.js backend development",
+        "Angular frontend development",
+        "Node.js server-side programming",
+        "RESTful API development",
+        "Authentication & Authorization",
+        "Cloud deployment (AWS/Azure)",
+        "Real-time features with Socket.io"
+      ],
+      "image": "https://www.mindinventory.com/blog/wp-content/uploads/2021/06/mean-stack.png",
+      "price": 499,
+      "instructor": {
+        "name": "David Kumar",
+        "title": "Senior Full Stack Developer",
+        "bio": "10+ years of experience in MEAN stack development",
+        "image": "https://randomuser.me/api/portraits/men/22.jpg"
+      }
+    },
+    {
+      "id": "mern-stack-2024",
+      "title": "MERN Stack Development Masterclass",
+      "category": "Full Stack Development",
+      "subcategory": "MERN Stack",
+      "description": "Master the MERN stack: MongoDB, Express.js, React, and Node.js. Build modern web applications with the most popular JavaScript stack.",
+      "level": "Intermediate",
+      "duration": "14 weeks",
+      "language": "English",
+      "highlights": [
+        "MongoDB & Mongoose ODM",
+        "Express.js API development",
+        "React with Hooks & Context",
+        "Node.js backend development",
+        "JWT Authentication",
+        "Redux state management",
+        "Docker containerization",
+        "CI/CD deployment"
+      ],
+      "image": "https://www.educative.io/cdn-cgi/image/f=auto,fit=contain,w=1200/api/page/5816757605367808/image/download/6486746733740032",
+      "price": 449,
+      "instructor": {
+        "name": "Alex Rodriguez",
+        "title": "MERN Stack Architect",
+        "bio": "15+ years of full stack development experience",
+        "image": "https://randomuser.me/api/portraits/men/55.jpg"
+      }
+    },
+    {
+      "id": "ml-ai-fundamentals",
+      "title": "Machine Learning & AI Fundamentals",
+      "category": "Data Science",
+      "subcategory": "Machine Learning",
+      "description": "Learn the fundamentals of Machine Learning and Artificial Intelligence. Master key algorithms, data preprocessing, and model deployment.",
+      "level": "Intermediate",
+      "duration": "12 weeks",
+      "language": "English",
+      "highlights": [
+        "Python for Data Science",
+        "Supervised Learning algorithms",
+        "Unsupervised Learning",
+        "Model evaluation & validation",
+        "Feature engineering",
+        "scikit-learn mastery",
+        "ML model deployment",
+        "Real-world ML projects"
+      ],
+      "image": "https://www.simplilearn.com/ice9/free_resources_article_thumb/Deep-Learning-vs-Machine-Learning.jpg",
+      "price": 599,
+      "instructor": {
+        "name": "Dr. Emily Zhang",
+        "title": "AI Research Scientist",
+        "bio": "PhD in Machine Learning, 8+ years of industry experience",
+        "image": "https://randomuser.me/api/portraits/women/68.jpg"
+      }
+    },
+    {
+      "id": "deep-learning-specialization",
+      "title": "Deep Learning Specialization",
+      "category": "Data Science",
+      "subcategory": "Deep Learning",
+      "description": "Master Deep Learning concepts and frameworks. Build neural networks using PyTorch and TensorFlow, and implement advanced architectures.",
+      "level": "Advanced",
+      "duration": "16 weeks",
+      "language": "English",
+      "highlights": [
+        "Neural Networks fundamentals",
+        "CNN for Computer Vision",
+        "RNN for Sequential Data",
+        "Transformers & BERT",
+        "GANs & Autoencoders",
+        "PyTorch & TensorFlow",
+        "GPU Training & Optimization",
+        "Deploy models to production"
+      ],
+      "image": "https://www.nvidia.com/content/dam/en-zz/Solutions/glossary/deep-learning/deep-learning-og-image.jpg",
+      "price": 699,
+      "instructor": {
+        "name": "Dr. James Wilson",
+        "title": "Deep Learning Expert",
+        "bio": "PhD in Computer Science, Former Google AI Researcher",
+        "image": "https://randomuser.me/api/portraits/men/92.jpg"
+      }
+    },
+    {
+      "id": "robotics-automation",
+      "title": "Robotics & Automation Engineering",
+      "category": "Robotics",
+      "subcategory": "Robotics Engineering",
+      "description": "Learn robotics programming, control systems, and automation. Build robots using ROS, Arduino, and Python while mastering core robotics concepts.",
+      "level": "Advanced",
+      "duration": "20 weeks",
+      "language": "English",
+      "highlights": [
+        "Robot Operating System (ROS)",
+        "Arduino & Raspberry Pi",
+        "Sensor integration",
+        "Control systems",
+        "Computer Vision for robots",
+        "Path planning algorithms",
+        "Robot manipulation",
+        "Industrial automation"
+      ],
+      "image": "https://www.analyticsinsight.net/wp-content/uploads/2020/04/Robotics-Engineering.jpg",
+      "price": 799,
+      "instructor": {
+        "name": "Dr. Robert Lee",
+        "title": "Robotics Engineer",
+        "bio": "20+ years in robotics, Former NASA engineer",
+        "image": "https://randomuser.me/api/portraits/men/75.jpg"
+      }
+    },
+    {
+      "id": "scratch-programming-kids",
+      "title": "Scratch Programming for Kids",
+      "category": "Kids Coding",
+      "subcategory": "Scratch",
+      "description": "Introduction to programming concepts using Scratch. Perfect for young learners to develop computational thinking and creativity.",
+      "level": "Beginner",
+      "duration": "8 weeks",
+      "language": "English",
+      "highlights": [
+        "Basic programming concepts",
+        "Game development",
+        "Animation creation",
+        "Interactive storytelling",
+        "Problem-solving skills",
+        "Algorithmic thinking",
+        "Project-based learning",
+        "Creative coding"
+      ],
+      "image": "https://cdn.scratch.mit.edu/static/images/scratch-og.png",
+      "price": 149,
+      "instructor": {
+        "name": "Lisa Parker",
+        "title": "Kids Coding Specialist",
+        "bio": "10+ years teaching coding to children",
+        "image": "https://randomuser.me/api/portraits/women/89.jpg"
+      }
+    }
+  ]
+}

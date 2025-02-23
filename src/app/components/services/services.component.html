@@ -1,0 +1,72 @@
+<div class="services-container">
+  <div class="services-header" [@fadeIn]>
+    <h1>{{ 'SERVICES.TITLE' | translate }}</h1>
+    <p>{{ 'SERVICES.SUBTITLE' | translate }}</p>
+  </div>
+
+  <div class="services-grid">
+    <!-- Website & Application Development -->
+    <mat-card class="service-card" [@slideIn]="'left'">
+      <mat-card-header>
+        <mat-icon class="service-icon">computer</mat-icon>
+        <mat-card-title>{{ 'SERVICES.WEB_DEV.TITLE' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'SERVICES.WEB_DEV.DESCRIPTION' | translate }}</p>
+        <ul>
+          <li *ngFor="let item of 'SERVICES.WEB_DEV.ITEMS' | translate" [@listAnimation]>
+            {{item}}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- IT Services & Consulting -->
+    <mat-card class="service-card" [@slideIn]="'left'">
+      <mat-card-header>
+        <mat-icon class="service-icon">settings</mat-icon>
+        <mat-card-title>{{ 'SERVICES.IT_SERVICES.TITLE' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'SERVICES.IT_SERVICES.DESCRIPTION' | translate }}</p>
+        <ul>
+          <li *ngFor="let item of 'SERVICES.IT_SERVICES.ITEMS' | translate" [@listAnimation]>
+            {{item}}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- AI & Robotics -->
+    <mat-card class="service-card" [@slideIn]="'right'">
+      <mat-card-header>
+        <mat-icon class="service-icon">psychology</mat-icon>
+        <mat-card-title>{{ 'SERVICES.AI_ROBOTICS.TITLE' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'SERVICES.AI_ROBOTICS.DESCRIPTION' | translate }}</p>
+        <ul>
+          <li *ngFor="let item of 'SERVICES.AI_ROBOTICS.ITEMS' | translate" [@listAnimation]>
+            {{item}}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Training & Upskilling -->
+    <mat-card class="service-card" [@slideIn]="'left'">
+      <mat-card-header>
+        <mat-icon class="service-icon">school</mat-icon>
+        <mat-card-title>{{ 'SERVICES.TRAINING.TITLE' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'SERVICES.TRAINING.DESCRIPTION' | translate }}</p>
+        <ul>
+          <li *ngFor="let item of 'SERVICES.TRAINING.ITEMS' | translate" [@listAnimation]>
+            {{item}}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

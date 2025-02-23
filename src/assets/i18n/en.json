@@ -18,6 +18,32 @@
     "TITLE": "Software Skills",
     "DESCRIPTION": "Here are some software tools and technologies"
   },
+  "DASHBOARD": {
+    "HERO": {
+      "TITLE": "Welcome to AlinoJ",
+      "SUBTITLE": "Your Gateway to Digital Excellence",
+      "INTRO": "Empowering businesses with innovative digital solutions and cutting-edge technology"
+    },
+    "WHAT_WE_DO": "What We Do",
+    "SERVICES": {
+      "WEB_DEV": {
+        "TITLE": "Web Development",
+        "DESC": "Custom web solutions tailored to your business needs"
+      },
+      "MOBILE_DEV": {
+        "TITLE": "Mobile Development",
+        "DESC": "Native and cross-platform mobile applications"
+      },
+      "ECOMMERCE": {
+        "TITLE": "E-Commerce Solutions",
+        "DESC": "Complete online store setup and management"
+      },
+      "TRAINING": {
+        "TITLE": "Technical Training",
+        "DESC": "Professional development and skill enhancement programs"
+      }
+    }
+  },
   "CONTACT": {
     "TITLE": "Contact Us",
     "SUBTITLE": "We'd love to hear from you! Reach out to us via the form below or through our contact details.",
@@ -44,35 +70,218 @@
     }
   },
   "AUTH": {
+    "VALIDATION": {
+      "NAME_REQUIRED": "Name is required",
+      "NAME_MIN_LENGTH": "Name must be at least 2 characters",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_INVALID": "Please enter a valid email address",
+      "PASSWORD_REQUIRED": "Password is required",
+      "PASSWORD_MIN_LENGTH": "Password must be at least 8 characters",
+      "LOGIN_ERROR": "Login failed. Please check your credentials and try again.",
+      "REGISTER_ERROR": "Registration failed. Please try again later."
+    },
     "LOGIN": {
-      "TITLE": "Login",
-      "EMAIL": "Email",
-      "EMAIL_PLACEHOLDER": "Enter your email",
+      "TITLE": "Welcome Back",
+      "SUBTITLE": "Sign in to your account",
+      "EMAIL": "Email Address",
+      "EMAIL_PLACEHOLDER": "Enter your email address",
       "PASSWORD": "Password",
       "PASSWORD_PLACEHOLDER": "Enter your password",
-      "PASSWORD_REQUIRED": "Password is required",
-      "PASSWORD_MINLENGTH": "Password must be at least 6 characters",
-      "SUBMIT": "Login",
-      "LOADING": "Logging in...",
+      "REMEMBER_ME": "Remember me",
+      "FORGOT_PASSWORD": "Forgot Password?",
+      "SUBMIT": "Sign In",
+      "LOADING": "Signing in...",
+      "SUCCESS": "Login successful!",
       "REGISTER_PROMPT": "Don't have an account?",
-      "REGISTER_LINK": "Register here",
-      "ERROR": "Invalid email or password"
+      "REGISTER_LINK": "Create one now",
+      "OR": "OR",
+      "GOOGLE_SIGNIN": "Sign in with Google",
+      "FACEBOOK_SIGNIN": "Sign in with Facebook",
+      "TOGGLE_PASSWORD_VISIBILITY": "Toggle password visibility"
     },
     "REGISTER": {
-      "TITLE": "Register",
-      "NAME": "Name",
-      "NAME_PLACEHOLDER": "Enter your name",
-      "EMAIL": "Email",
-      "EMAIL_PLACEHOLDER": "Enter your email",
+      "TITLE": "Create Account",
+      "SUBTITLE": "Join us today",
+      "NAME": "Full Name",
+      "NAME_PLACEHOLDER": "Enter your full name",
+      "EMAIL": "Email Address",
+      "EMAIL_PLACEHOLDER": "Enter your email address",
       "PASSWORD": "Password",
-      "PASSWORD_PLACEHOLDER": "Enter your password",
-      "PASSWORD_REQUIRED": "Password is required",
-      "PASSWORD_MINLENGTH": "Password must be at least 6 characters",
-      "SUBMIT": "Register",
-      "LOADING": "Registering...",
+      "PASSWORD_PLACEHOLDER": "Choose a strong password",
+      "CONFIRM_PASSWORD": "Confirm Password",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Re-enter your password",
+      "TERMS": "I agree to the Terms & Conditions",
+      "PRIVACY": "I agree to the Privacy Policy",
+      "SUBMIT": "Create Account",
+      "LOADING": "Creating your account...",
+      "SUCCESS": "Registration successful!",
       "LOGIN_PROMPT": "Already have an account?",
-      "LOGIN_LINK": "Login here",
-      "ERROR": "Registration failed"
+      "LOGIN_LINK": "Sign in instead",
+      "OR": "OR",
+      "GOOGLE_SIGNUP": "Sign up with Google",
+      "FACEBOOK_SIGNUP": "Sign up with Facebook",
+      "TOGGLE_PASSWORD_VISIBILITY": "Toggle password visibility"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Our Services",
+    "SUBTITLE": "Empowering businesses with cutting-edge technology solutions",
+    "WEB_DEV": {
+      "TITLE": "Website & Application Development",
+      "DESCRIPTION": "We build custom, scalable, and high-performance web and mobile applications tailored to your needs.",
+      "ITEMS": [
+        "Custom Website Development",
+        "Web & Mobile App Development",
+        "UI/UX Design & Development",
+        "Progressive Web Apps (PWA)"
+      ]
+    },
+    "IT_SERVICES": {
+      "TITLE": "IT Services & Consulting",
+      "DESCRIPTION": "Optimize your IT infrastructure and ensure seamless business operations with our expert solutions.",
+      "ITEMS": [
+        "Cloud Computing & DevOps Solutions",
+        "IT Infrastructure Setup & Maintenance",
+        "Cybersecurity & Data Protection",
+        "IT Consulting & Tech Support"
+      ]
+    },
+    "AI_ROBOTICS": {
+      "TITLE": "Artificial Intelligence & Robotics",
+      "DESCRIPTION": "Empower your business with AI-driven automation and smart robotics solutions.",
+      "ITEMS": [
+        "Machine Learning & Deep Learning Solutions",
+        "AI Chatbots & Virtual Assistants",
+        "Robotics Process Automation (RPA)",
+        "Computer Vision & NLP Development"
+      ]
+    },
+    "TRAINING": {
+      "TITLE": "Training & Upskilling",
+      "DESCRIPTION": "We offer hands-on, industry-relevant training to upskill developers and IT professionals.",
+      "ITEMS": [
+        "Python, Java, JavaScript, C++, C#",
+        "Web Development (HTML, CSS, React, Angular, Vue)",
+        "AI & Machine Learning Courses",
+        "Full-Stack Development & DevOps Training"
+      ]
+    }
+  },
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "SUBTITLE": "Let's Start a Conversation",
+    "GET_IN_TOUCH": {
+      "TITLE": "Get in Touch",
+      "SUBTITLE": "We're here to help and answer any questions you might have",
+      "VISIT_US": {
+        "LABEL": "Visit Us",
+        "VALUE": "123 IT Street, Tech City, USA"
+      },
+      "CALL_US": {
+        "LABEL": "Call Us",
+        "VALUE": "+1 234 567 890"
+      },
+      "EMAIL_US": {
+        "LABEL": "Email Us",
+        "VALUE": "contact@itsolutions.com"
+      },
+      "WORKING_HOURS": {
+        "LABEL": "Working Hours",
+        "VALUE": "Mon - Fri: 9:00 AM - 6:00 PM"
+      }
+    },
+    "FORM": {
+      "TITLE": "Send us a Message",
+      "SUBTITLE": "Fill out the form below and we'll get back to you as soon as possible",
+      "FULL_NAME": "Full Name",
+      "EMAIL": "Email",
+      "MESSAGE": "Message",
+      "SUBMIT": "Send Message",
+      "ERRORS": {
+        "NAME_REQUIRED": "Name is required",
+        "EMAIL_REQUIRED": "Email is required",
+        "EMAIL_INVALID": "Please enter a valid email",
+        "MESSAGE_REQUIRED": "Message is required"
+      }
+    }
+  },
+  "ABOUT": {
+    "HERO": {
+      "TITLE": "Innovation Beyond Boundaries",
+      "SUBTITLE": "Welcome to Alinoj Creators Private Limited",
+      "INTRO": "Where technology meets creativity to shape the future. We are a leading software company specializing in website development, application solutions, e-commerce, IT services, and training across all coding languages, with a strong focus on AI and Robotics."
+    },
+    "WHO_WE_ARE": {
+      "TITLE": "Who We Are",
+      "DESCRIPTION": "At Alinoj Creators, we don't just develop software—we engineer digital excellence. Our team of passionate innovators, developers, and IT experts is dedicated to empowering businesses and individuals with cutting-edge technology solutions. Whether it's crafting high-performance websites, developing intelligent applications, building e-commerce platforms, or delivering world-class IT services, we bring expertise, innovation, and quality to everything we do."
+    },
+    "WHAT_WE_DO": {
+      "TITLE": "What We Do",
+      "ITEMS": {
+        "WEB_DEV": {
+          "TITLE": "Website & Application Development",
+          "DESCRIPTION": "Transforming ideas into reality with scalable, user-friendly digital solutions."
+        },
+        "ECOMMERCE": {
+          "TITLE": "E-commerce Solutions",
+          "DESCRIPTION": "Designing feature-rich online stores with seamless shopping experiences."
+        },
+        "IT_SERVICES": {
+          "TITLE": "IT Services & Consulting",
+          "DESCRIPTION": "Providing tailored IT solutions, cloud computing, cybersecurity, and infrastructure support."
+        },
+        "AI_ROBOTICS": {
+          "TITLE": "AI & Robotics",
+          "DESCRIPTION": "Pioneering the future with intelligent automation and machine learning solutions."
+        },
+        "TRAINING": {
+          "TITLE": "Tech Training & Upskilling",
+          "DESCRIPTION": "Empowering aspiring developers and professionals with hands-on training in all major coding languages."
+        }
+      }
+    },
+    "VISION": {
+      "TITLE": "Our Vision",
+      "DESCRIPTION": "To bridge the gap between technology and human potential, fostering innovation that shapes the digital world. We believe in building solutions that are intelligent, efficient, and impactful."
+    },
+    "WHY_CHOOSE_US": {
+      "TITLE": "Why Choose Us?",
+      "ITEMS": {
+        "INNOVATION": {
+          "TITLE": "Expert-Led Innovation",
+          "DESCRIPTION": "Cutting-edge tech solutions crafted by industry professionals."
+        },
+        "SOLUTIONS": {
+          "TITLE": "Customized Solutions",
+          "DESCRIPTION": "Tailored digital products designed to fit your business needs."
+        },
+        "SCALABILITY": {
+          "TITLE": "Scalable E-commerce & IT Services",
+          "DESCRIPTION": "Robust, secure, and future-proof technology solutions."
+        },
+        "LEARNING": {
+          "TITLE": "Hands-on Learning",
+          "DESCRIPTION": "Industry-relevant training programs with real-world applications."
+        }
+      }
+    }
+  },
+  "FOOTER": {
+    "COMPANY": "Company",
+    "LEARNING": "Learning",
+    "LEGAL": "Legal",
+    "CONNECT": "Connect With Us",
+    "ALL_RIGHTS_RESERVED": "All rights reserved",
+    "LINKS": {
+      "ABOUT": "About Us",
+      "CAREERS": "Careers",
+      "CONTACT": "Contact",
+      "COURSES": "Courses",
+      "TUTORIALS": "Tutorials",
+      "RESOURCES": "Resources",
+      "PRIVACY": "Privacy Policy",
+      "TERMS": "Terms of Service",
+      "COOKIES": "Cookie Policy"
     }
   }
 }

@@ -78,6 +78,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const productRoutes = require('./src/routes/product.routes');
 const cartRoutes = require('./routes/cart.routes');
 const wishlistRoutes = require('./routes/wishlist.routes');
+const enrollmentRoutes = require('./routes/enrollment.routes');
 
 // API Routes
 app.use('/api/portfolio', portfolioRoutes);
@@ -87,6 +88,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/enrollments', enrollmentRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

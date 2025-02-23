@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,8 @@ import { WishlistService } from '@app/services/shop/wishlist.service';
 
 @Component({
   selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -26,11 +28,9 @@ import { WishlistService } from '@app/services/shop/wishlist.service';
     MatIconModule,
     MatBadgeModule,
     TranslateModule
-  ],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  ]
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   isLoggedIn = false;
   isAdminUser = false;
@@ -41,39 +41,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cartItemCount = 0;
   courseCategories = [
     {
-      name: 'Programming',
-      icon: 'M12 2.5l10 5v10l-10 5-10-5v-10l10-5zM4 7.5v8l8 4 8-4v-8l-8-4-8 4z',
+      name: 'Frontend Development',
+      icon: 'code',
       subcategories: [
-        { name: 'Web Development', route: '/courses/web-development', icon: 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.91-4.33-3.56zm2.95-8H5.08c.96-1.65 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c.43 1.43 1.08 2.76 1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56z' },
-        { name: 'Mobile Development', route: '/courses/mobile-development', icon: 'M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z' },
-        { name: 'Backend Development', route: '/courses/backend-development', icon: 'M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4v-2h16v2zm0-5H4V8h3v2h2V8h6v2h2V8h3v6z' }
+        { name: 'Angular', route: '/courses/angular', icon: 'change_history' },
+        { name: 'React', route: '/courses/react', icon: 'radio_button_unchecked' },
+        { name: 'Vue.js', route: '/courses/vuejs', icon: 'lens' },
+        { name: 'HTML & CSS', route: '/courses/html-css', icon: 'html' },
+        { name: 'JavaScript', route: '/courses/javascript', icon: 'javascript' }
       ]
     },
     {
-      name: 'Data Science',
-      icon: 'M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z',
+      name: 'Backend Development',
+      icon: 'dns',
       subcategories: [
-        { name: 'Machine Learning', route: '/courses/machine-learning', icon: 'M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z' },
-        { name: 'Data Analysis', route: '/courses/data-analysis', icon: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z' },
-        { name: 'AI & Deep Learning', route: '/courses/ai-deep-learning', icon: 'M20 4H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v2H4V6zm16 12H4v-2h16v2zm0-5H4V8h3v2h2V8h6v2h2V8h3v6z' }
+        { name: 'Express.js', route: '/courses/expressjs', icon: 'memory' },
+        { name: 'MEAN Stack', route: '/courses/mean-stack', icon: 'layers' },
+        { name: 'MERN Stack', route: '/courses/mern-stack', icon: 'developer_board' }
       ]
     },
     {
-      name: 'Design',
-      icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.94 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z',
+      name: 'AI & Machine Learning',
+      icon: 'psychology',
       subcategories: [
-        { name: 'UI/UX Design', route: '/courses/ui-ux-design', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92c-.78.78-1.17 1.82-1.17 2.83V15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z' },
-        { name: 'Graphic Design', route: '/courses/graphic-design', icon: 'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm0 0H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z' },
-        { name: 'Product Design', route: '/courses/product-design', icon: 'M2 12h2v3h16v-3h2v5H2zm0-5h2V4h16v3h2V3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v4h2v4h2v-4H2v-3z' }
+        { name: 'Machine Learning', route: '/courses/machine-learning', icon: 'auto_awesome' },
+        { name: 'Deep Learning', route: '/courses/deep-learning', icon: 'bubble_chart' }
       ]
     },
     {
-      name: 'Cloud & DevOps',
-      icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.94 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z',
+      name: 'Programming for Kids',
+      icon: 'child_care',
       subcategories: [
-        { name: 'AWS Cloud', route: '/courses/aws-cloud', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92c-.78.78-1.17 1.82-1.17 2.83V15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z' },
-        { name: 'Docker & Kubernetes', route: '/courses/docker-kubernetes', icon: 'M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4v-2h16v2zm0-5H4V8h3v2h2V8h6v2h2V8h3v6z' },
-        { name: 'CI/CD Pipelines', route: '/courses/ci-cd-pipelines', icon: 'M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z' }
+        { name: 'Robotics', route: '/courses/robotics', icon: 'smart_toy' },
+        { name: 'Scratch Coding', route: '/courses/scratch', icon: 'extension' }
       ]
     }
   ];
@@ -110,34 +110,43 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
   currentUser: User | null = null;
   private authSubscription: Subscription | null = null;
+  currentLang: string;
+  languages = [
+    { code: 'en', name: 'English' },
+    { code: 'ta', name: 'தமிழ்' }
+  ];
+
+  @ViewChild('coursesMenuTrigger') coursesMenuTrigger!: MatMenuTrigger;
 
   constructor(
-    private translateService: TranslateService,
+    private router: Router,
     private authService: AuthService,
     private dialogService: DialogService,
     private cartService: CartService,
-    private router: Router,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private translate: TranslateService
   ) {
-    this.subscriptions.push(
-      this.wishlistService.getWishlistItems().subscribe(items => {
-        this.wishlistItemCount = items.length;
-      })
-    );
-
-    this.translateService.setTranslation('en', {
-      HEADER: {
-        HOME: 'Home',
-        COURSES: 'Courses',
-        SHOP: 'Shop',
-        ABOUT: 'About',
-        CONTACT: 'Contact',
-        LOGIN: 'Login',
-        REGISTER: 'Register',
-        LOGOUT: 'Logout',
-        PROFILE: 'Profile'
-      }
-    });
+    // Get browser language
+    const browserLang = navigator.language;
+    
+    // Set default language as English
+    this.translate.setDefaultLang('en');
+    
+    // Automatically detect and set language
+    if (browserLang) {
+      // Check if browser language starts with 'ta' for Tamil
+      const userLang = browserLang.toLowerCase().startsWith('ta') ? 'ta' : 'en';
+      this.currentLang = userLang;
+      this.translate.use(userLang);
+      
+      // Store the language preference in localStorage
+      localStorage.setItem('preferredLanguage', userLang);
+    } else {
+      // Fallback to stored preference or default to English
+      const storedLang = localStorage.getItem('preferredLanguage');
+      this.currentLang = storedLang || 'en';
+      this.translate.use(this.currentLang);
+    }
   }
 
   ngOnInit(): void {
@@ -215,8 +224,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isCoursesMenuOpen = !this.isCoursesMenuOpen;
   }
 
-  switchLanguage(lang: string) {
-    this.translateService.use(lang);
+  switchLanguage(langCode: string): void {
+    this.currentLang = langCode;
+    this.translate.use(langCode);
+    localStorage.setItem('preferredLanguage', langCode);
   }
 
   openLogin() {
@@ -239,18 +250,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
       isLoggedIn: this.isLoggedIn,
       userRole: this.currentUser?.role
     });
-    this.router.navigate(['/header-master'], { 
-      replaceUrl: true,
-      queryParams: {
-        userRole: this.currentUser?.role
-      }
-    }).then(
-      success => console.log('Navigation to Header Management successful'),
-      error => console.error('Navigation to Header Management failed', error)
+    this.router.navigate(['/header-management']).then(
+      (success: boolean) => console.log('Navigation to Header Management successful'),
+      (error: Error) => console.error('Navigation to Header Management failed:', error)
     );
   }
 
   navigateToCart() {
     this.router.navigate(['/shop/cart']);
+  }
+
+  navigateToDashboard() {
+    console.log('Attempting to navigate to dashboard');
+    this.router.navigate(['/dashboard']).then(
+      (success) => {
+        if (success) {
+          console.log('Navigation to dashboard successful');
+        } else {
+          console.warn('Navigation to dashboard was prevented');
+        }
+      },
+      (error) => console.error('Navigation to dashboard failed:', error)
+    );
   }
 }

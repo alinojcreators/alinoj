@@ -82,33 +82,22 @@ export class CartService implements OnDestroy {
   }
 
   private loadCart() {
-    const userId = this.getUserId();
-    if (userId) {
-      this.http.get<CartItem[]>(`${this.apiUrl}`, this.getAuthHeaders())
-        .pipe(
-          catchError(error => {
-            if (error.status === 401) {
-              console.error('Unauthorized access:', error);
-              localStorage.removeItem('token'); // Clear invalid token
-              return of([]);
-            }
-            console.error('Error loading cart:', error);
+    return this.http.get<CartItem[]>(this.apiUrl, this.getAuthHeaders())
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            console.error('Unauthorized access:', error);
+            localStorage.removeItem('token'); // Clear invalid token
             return of([]);
-          })
-        )
-        .subscribe(items => {
-          this.cartItems.next(items || []);
-          this.updateCartTotal();
-        });
-    } else {
-      this.cartItems.next([]);
-      this.cartTotal.next(0);
-    }
-  }
-
-  private updateCartTotal() {
-    const total = this.calculateTotal();
-    this.cartTotal.next(total);
+          }
+          console.error('Error loading cart:', error);
+          return of([]);
+        })
+      )
+      .subscribe(items => {
+        this.cartItems.next(items);
+        this.updateCartTotal();
+      });
   }
 
   getCartItems(): Observable<CartItem[]> {
@@ -121,12 +110,13 @@ export class CartService implements OnDestroy {
     );
   }
 
-  private calculateTotal() {
-    const items = this.cartItems.getValue();
-    return items.reduce((sum, item) => {
+  private updateCartTotal() {
+    const total = this.cartItems.getValue().reduce((sum, item) => {
+      if (!item?.product) return sum;
       const price = item.product.sellingPrice || item.product.price || 0;
-      return sum + (price * item.quantity);
+      return sum + (price * (item.quantity || 0));
     }, 0);
+    this.cartTotal.next(total);
   }
 
   getCartTotal(): Observable<number> {
@@ -134,147 +124,64 @@ export class CartService implements OnDestroy {
   }
 
   addToCart(product: Product, quantity: number = 1): Observable<CartItem[]> {
-    const userId = this.getUserId();
-    if (!userId) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 401, message: 'Please authenticate' });
-      });
-    }
-
     const productId = product._id || product.id;
     if (!productId) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 400, message: 'Invalid product ID' });
-      });
+      console.error('Product has no ID:', product);
+      throw new Error('Invalid product ID');
     }
-
-    // Optimistic update
-    const currentItems = this.cartItems.getValue();
-    const updatedItems = [...currentItems];
-    const existingItemIndex = updatedItems.findIndex(item => 
-      (item.product._id === productId || item.product.id === productId)
-    );
-
-    if (existingItemIndex > -1) {
-      updatedItems[existingItemIndex].quantity += quantity;
-    } else {
-      updatedItems.push({ product, quantity });
-    }
-
-    this.cartItems.next(updatedItems);
-    this.updateCartTotal();
-
-    return this.http.post<CartItem[]>(
-      `${this.apiUrl}/add`,
-      { productId, quantity },
-      this.getAuthHeaders()
-    ).pipe(
+    
+    return this.http.post<CartItem[]>(`${this.apiUrl}/add`, { 
+      productId: productId.toString(), 
+      quantity 
+    }, this.getAuthHeaders())
+    .pipe(
       tap(items => {
         this.cartItems.next(items);
         this.updateCartTotal();
       }),
       catchError(error => {
-        // Revert optimistic update on error
-        this.cartItems.next(currentItems);
-        this.updateCartTotal();
+        console.error('Error adding to cart:', error);
         throw error;
       })
     );
   }
 
   removeFromCart(productId: string): Observable<CartItem[]> {
-    const userId = this.getUserId();
-    if (!userId) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 401, message: 'Please authenticate' });
-      });
-    }
-
     if (!productId) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 400, message: 'Invalid product ID' });
-      });
+      console.error('Invalid product ID');
+      throw new Error('Invalid product ID');
     }
 
-    // Optimistic update
-    const currentItems = this.cartItems.getValue();
-    const updatedItems = currentItems.filter(item => 
-      item.product._id !== productId && item.product.id !== productId
-    );
-
-    this.cartItems.next(updatedItems);
-    this.updateCartTotal();
-
-    return this.http.delete<CartItem[]>(
-      `${this.apiUrl}/remove/${productId}`,
-      this.getAuthHeaders()
-    ).pipe(
-      tap(items => {
-        this.cartItems.next(items);
-        this.updateCartTotal();
-      }),
-      catchError(error => {
-        // Revert optimistic update on error
-        this.cartItems.next(currentItems);
-        this.updateCartTotal();
-        throw error;
-      })
-    );
+    return this.http.delete<CartItem[]>(`${this.apiUrl}/remove/${productId.toString()}`, this.getAuthHeaders())
+      .pipe(
+        tap(items => {
+          this.cartItems.next(items);
+          this.updateCartTotal();
+        }),
+        catchError(error => {
+          console.error('Error removing from cart:', error);
+          throw error;
+        })
+      );
   }
 
   updateQuantity(productId: string, quantity: number): Observable<CartItem[]> {
-    console.log(productId, "productId");
-    const userId = this.getUserId();
-    if (!userId) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 401, message: 'Please authenticate' });
-      });
-    }
-
     if (!productId) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 400, message: 'Invalid product ID' });
-      });
+      console.error('Invalid product ID');
+      throw new Error('Invalid product ID');
     }
 
-    // Optimistic update
-    const currentItems = this.cartItems.getValue();
-    const updatedItems = [...currentItems];
-    const existingItemIndex = updatedItems.findIndex(item => 
-      (item.product._id === productId || item.product.id === productId)
-    );
-
-    if (existingItemIndex === -1) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 404, message: 'Product not found in cart' });
-      });
-    }
-
-    const item = updatedItems[existingItemIndex];
-    if (quantity > (item.product.stock || 0)) {
-      return new Observable(subscriber => {
-        subscriber.error({ status: 400, message: 'Not enough stock available' });
-      });
-    }
-
-    // Apply optimistic update
-    updatedItems[existingItemIndex].quantity = quantity;
-    this.cartItems.next(updatedItems);
-    this.updateCartTotal();
-
-    return this.http.put<CartItem[]>(
-      `${this.apiUrl}/update`,
-      { productId, quantity },
-      this.getAuthHeaders()
-    ).pipe(
+    return this.http.put<CartItem[]>(`${this.apiUrl}/update`, { 
+      productId: productId.toString(), 
+      quantity 
+    }, this.getAuthHeaders())
+    .pipe(
       tap(items => {
         this.cartItems.next(items);
         this.updateCartTotal();
       }),
       catchError(error => {
-        // Revert optimistic update on error
-        this.cartItems.next(currentItems);
-        this.updateCartTotal();
+        console.error('Error updating quantity:', error);
         throw error;
       })
     );

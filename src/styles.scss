@@ -204,3 +204,22 @@ body.mobile-menu-open {
   position: fixed;
   width: 100%;
 }
+
+// Snackbar styles
+.success-snackbar {
+  background: #4caf50;
+  color: white;
+  
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+
+.error-snackbar {
+  background: #f44336;
+  color: white;
+  
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}

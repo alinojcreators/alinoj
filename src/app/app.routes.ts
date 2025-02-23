@@ -83,5 +83,25 @@ export const routes: Routes = [
     path: 'shop/:category',
     component: ShopCategoryComponent
   },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+  {
+    path: 'courses',
+    children: [
+      {
+        path: 'detail/:id',
+        loadComponent: () => import('../app/components/course-detail/course-detail.component')
+          .then(m => m.CourseDetailComponent)
+      },
+      {
+        path: ':category',
+        loadComponent: () => import('./components/course-list/course-list.component')
+          .then(m => m.CourseListComponent)
+      },
+      {
+        path: ':category/:subcategory',
+        loadComponent: () => import('./components/course-list/course-list.component')
+          .then(m => m.CourseListComponent)
+      }
+    ]
+  },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];

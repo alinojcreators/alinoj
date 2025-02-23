@@ -1,19 +1,54 @@
 <div class="dashboard">
-  <!-- Left Side: Animated Text -->
-  <div class="animated-text">
-    <h1>Welcome to Our Church</h1>
-    <p>Experience the love and peace of Christ with us.</p>
+  <!-- Language Switcher -->
+  <div class="language-switcher">
+    <button mat-button [matMenuTriggerFor]="languageMenu">
+      <mat-icon>language</mat-icon>
+      {{ currentLang === 'en' ? 'English' : 'தமிழ்' }}
+    </button>
+    <mat-menu #languageMenu="matMenu">
+      <button mat-menu-item (click)="switchLanguage('en')">
+        <span>English</span>
+      </button>
+      <button mat-menu-item (click)="switchLanguage('ta')">
+        <span>தமிழ்</span>
+      </button>
+    </mat-menu>
   </div>
+
+  <!-- Left Side: Animated Hero Section -->
+  <section class="hero-section" @fadeIn @slideInText>
+    <div class="hero-content">
+      <h1 class="animate-text">{{ 'DASHBOARD.HERO.TITLE' | translate }}</h1>
+      <h2 class="animate-text">{{ 'DASHBOARD.HERO.SUBTITLE' | translate }}</h2>
+      <p class="intro animate-text">{{ 'DASHBOARD.HERO.INTRO' | translate }}</p>
+    </div>
+  </section>
 
   <!-- Right Side: Image Slider -->
   <div class="image-slider">
-    <div
-      class="slider"
-      [style.backgroundImage]="'url(' + images[currentIndex] + ')'"
-    ></div>
+    <img [src]="images[currentIndex]" alt="Slider image" class="slide">
   </div>
 </div>
-<app-about></app-about>
+
+<app-tools></app-tools>
+
+<!-- What We Do Section -->
+<section class="what-we-do-section" @fadeIn>
+  <div class="section-header">
+    <h2>{{ 'DASHBOARD.WHAT_WE_DO' | translate }}</h2>
+    <div class="header-line"></div>
+  </div>
+  <div class="cards-container" @staggerAnimation>
+    <mat-card class="service-card" *ngFor="let service of whatWeDo" @cardAnimation>
+      <div class="card-icon">
+        <mat-icon>{{service.icon}}</mat-icon>
+      </div>
+      <h3>{{service.titleKey | translate}}</h3>
+      <p>{{service.descriptionKey | translate}}</p>
+      <div class="card-hover-effect"></div>
+    </mat-card>
+  </div>
+</section>
+
 <app-services></app-services>
-<app-portfolio></app-portfolio>
 <app-contact></app-contact>

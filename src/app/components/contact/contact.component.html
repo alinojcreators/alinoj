@@ -1,70 +1,148 @@
-<section id="contact" class="contact-section">
-  <div class="container">
-    <h2>Contact Us</h2>
-    <p>We'd love to hear from you! Reach out to us via the form below or through our contact details.</p>
+<section id="contact" class="contact-section" @fadeIn>
+  <div class="section-header">
+    <h2 class="section-title">{{ 'CONTACT.TITLE' | translate }}</h2>
+    <div class="title-underline"></div>
+    <p class="section-subtitle">{{ 'CONTACT.SUBTITLE' | translate }}</p>
+  </div>
 
-    <div class="contact-content">
-      <!-- Contact Details -->
-      <div class="contact-info">
-        <h3>Get in Touch</h3>
-        <p><i class="fas fa-phone-alt"></i> +1 234 567 890</p>
-        <p><i class="fas fa-envelope"></i> contactitsolutions.com</p>
-        <p><i class="fas fa-map-marker-alt"></i> 123 IT Street, Tech City, USA</p>
+  <div class="contact-content" @staggerAnimation>
+    <!-- Contact Information -->
+    <div class="contact-card info-card" @slideIn>
+      <div class="card-content">
+        <div class="contact-header">
+          <h3 class="title">{{ 'CONTACT.GET_IN_TOUCH.TITLE' | translate }}</h3>
+          <p class="subtitle">{{ 'CONTACT.GET_IN_TOUCH.SUBTITLE' | translate }}</p>
+        </div>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="info">
+              <span class="label">{{ 'CONTACT.GET_IN_TOUCH.VISIT_US.LABEL' | translate }}</span>
+              <span class="value">{{ 'CONTACT.GET_IN_TOUCH.VISIT_US.VALUE' | translate }}</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="info">
+              <span class="label">{{ 'CONTACT.GET_IN_TOUCH.CALL_US.LABEL' | translate }}</span>
+              <span class="value">{{ 'CONTACT.GET_IN_TOUCH.CALL_US.VALUE' | translate }}</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="info">
+              <span class="label">{{ 'CONTACT.GET_IN_TOUCH.EMAIL_US.LABEL' | translate }}</span>
+              <span class="value">{{ 'CONTACT.GET_IN_TOUCH.EMAIL_US.VALUE' | translate }}</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="info">
+              <span class="label">{{ 'CONTACT.GET_IN_TOUCH.WORKING_HOURS.LABEL' | translate }}</span>
+              <span class="value">{{ 'CONTACT.GET_IN_TOUCH.WORKING_HOURS.VALUE' | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="social-link" title="Follow us on LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="social-link" title="Follow us on Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-link" title="Follow us on Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-link" title="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
       </div>
+    </div>
 
-      <!-- Contact Form -->
-      <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="name">Your Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            formControlName="name" 
-            placeholder="Enter your name" 
-            [class.is-invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
-          />
-          <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
-            {{ getErrorMessage('name') }}
-          </div>
+    <!-- Contact Form -->
+    <div class="contact-card form-card" @slideIn>
+      <div class="card-content">
+        <div class="form-header">
+          <h3 class="title">{{ 'CONTACT.FORM.TITLE' | translate }}</h3>
+          <p class="subtitle">{{ 'CONTACT.FORM.SUBTITLE' | translate }}</p>
         </div>
 
-        <div class="form-group">
-          <label for="email">Your Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            formControlName="email" 
-            placeholder="Enter your email" 
-            [class.is-invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
-          />
-          <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
-            {{ getErrorMessage('email') }}
-          </div>
-        </div>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'CONTACT.FORM.FULL_NAME' | translate }}</mat-label>
+            <input 
+              matInput 
+              formControlName="name"
+              [placeholder]="'CONTACT.FORM.FULL_NAME' | translate"
+            >
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="contactForm.get('name')?.errors?.['required']">
+              {{ 'CONTACT.FORM.ERRORS.NAME_REQUIRED' | translate }}
+            </mat-error>
+            <mat-error *ngIf="contactForm.get('name')?.errors?.['minlength']">
+              {{ 'CONTACT.FORM.ERRORS.NAME_MIN_LENGTH' | translate }}
+            </mat-error>
+          </mat-form-field>
 
-        <div class="form-group">
-          <label for="message">Your Message</label>
-          <textarea 
-            id="message" 
-            formControlName="message" 
-            rows="4" 
-            placeholder="Enter your message" 
-            [class.is-invalid]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
-          ></textarea>
-          <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
-            {{ getErrorMessage('message') }}
-          </div>
-        </div>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'CONTACT.FORM.EMAIL' | translate }}</mat-label>
+            <input 
+              matInput 
+              type="email"
+              formControlName="email"
+              [placeholder]="'CONTACT.FORM.EMAIL' | translate"
+            >
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="contactForm.get('email')?.errors?.['required']">
+              {{ 'CONTACT.FORM.ERRORS.EMAIL_REQUIRED' | translate }}
+            </mat-error>
+            <mat-error *ngIf="contactForm.get('email')?.errors?.['email']">
+              {{ 'CONTACT.FORM.ERRORS.EMAIL_INVALID' | translate }}
+            </mat-error>
+          </mat-form-field>
 
-        <button 
-          type="submit" 
-          class="btn" 
-          [disabled]="contactForm.invalid || isSubmitting"
-          [class.loading]="isSubmitting"
-        >
-          {{ isSubmitting ? 'Sending...' : 'Send Message' }}
-        </button>
-      </form>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'CONTACT.FORM.MESSAGE' | translate }}</mat-label>
+            <textarea 
+              matInput 
+              formControlName="message"
+              rows="4"
+              [placeholder]="'CONTACT.FORM.MESSAGE' | translate"
+            ></textarea>
+            <mat-icon matPrefix>message</mat-icon>
+            <mat-error *ngIf="contactForm.get('message')?.errors?.['required']">
+              {{ 'CONTACT.FORM.ERRORS.MESSAGE_REQUIRED' | translate }}
+            </mat-error>
+            <mat-error *ngIf="contactForm.get('message')?.errors?.['minlength']">
+              {{ 'CONTACT.FORM.ERRORS.MESSAGE_MIN_LENGTH' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="contactForm.invalid || isSubmitting"
+          >
+            <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
+            <span>{{ (isSubmitting ? 'CONTACT.FORM.SENDING' : 'CONTACT.FORM.SUBMIT') | translate }}</span>
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </section>

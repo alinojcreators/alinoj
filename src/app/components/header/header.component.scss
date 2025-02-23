@@ -5,10 +5,28 @@
   right: 0;
   z-index: 1000;
   padding: 0;
-  height: 64px;
-  background: linear-gradient(135deg, #003366, #005599);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 70px;
+  background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(100, 181, 246, 0.1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(45deg, rgba(0,51,102,0.1) 25%, transparent 25%) -50px 0,
+      linear-gradient(-45deg, rgba(0,51,102,0.1) 25%, transparent 25%) -50px 0,
+      linear-gradient(45deg, transparent 75%, rgba(0,51,102,0.1) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(0,51,102,0.1) 75%);
+    background-size: 100px 100px;
+    opacity: 0.1;
+  }
 }
 
 .container {
@@ -16,7 +34,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 16px;
   height: 100%;
@@ -25,16 +43,51 @@
 .logo-section {
   display: flex;
   align-items: center;
+  gap: 16px;
 
   .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .logo-image {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ffffff, #64b5f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
   }
 
   .menu-button {
     display: none;
+  }
+
+  @media (max-width: 768px) {
+    .menu-button {
+      display: block;
+    }
+
+    .logo {
+      .logo-text {
+        font-size: 1.5rem;
+      }
+    }
   }
 }
 
@@ -43,22 +96,38 @@
   align-items: center;
   gap: 8px;
 
-  .nav-link {
+  a, button {
+    color: rgba(255, 255, 255, 0.87);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
 
     mat-icon {
-      margin-right: 4px;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
     }
-  }
 
-  a {
-    text-decoration: none;
-    font-weight: 500;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      
+      mat-icon {
+        opacity: 1;
+      }
+    }
 
     &.active {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(100, 181, 246, 0.2);
+      border: 1px solid rgba(100, 181, 246, 0.3);
+      
+      mat-icon {
+        opacity: 1;
+        color: #64b5f6;
+      }
     }
   }
 }
@@ -68,18 +137,20 @@
   align-items: center;
   gap: 8px;
 
-  .language-button {
-    margin-right: 8px;
-  }
+  button {
+    color: rgba(255, 255, 255, 0.87);
+    
+    mat-icon {
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
 
-  .auth-button {
-    min-width: 88px;
-  }
-
-  .profile-button {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    &:hover {
+      mat-icon {
+        opacity: 1;
+        color: #64b5f6;
+      }
+    }
   }
 }
 
@@ -109,112 +180,88 @@
     }
   }
 
-  .courses-megamenu-dropdown {
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100vw !important;
-    margin-left: calc(-50vw + 50%) !important;
+  .course-dropdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    background: #1a1a1a;
+    min-width: 600px;
+    border: 1px solid rgba(100, 181, 246, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 
-    .mat-menu-content {
-      padding: 0 !important;
-      max-height: 300px !important;
-      overflow: hidden !important;
-    }
+    .course-category {
+      padding: 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(100, 181, 246, 0.1);
+      transition: all 0.3s ease;
 
-    .megamenu-content {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 12px 5%;
-      width: 100%;
-      max-width: 100%;
-      height: 300px;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border-top: 1px solid rgba(0,0,0,0.1);
-      overflow: hidden;
+      &:hover {
+        background: rgba(100, 181, 246, 0.1);
+        transform: translateY(-2px);
+        border-color: rgba(100, 181, 246, 0.2);
+      }
 
-      .category-column {
+      .category-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        color: #ffffff;
+        font-weight: 500;
+
+        mat-icon {
+          color: #64b5f6;
+        }
+
+        span {
+          background: linear-gradient(135deg, #ffffff, #64b5f6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+
+      .subcategories {
         display: flex;
         flex-direction: column;
-        flex: 1;
-        padding: 0 10px;
-        height: 100%;
+        gap: 8px;
 
-        h3 {
-          font-weight: bold;
-          margin-bottom: 8px;
-          color: #333;
-          text-transform: uppercase;
-          font-size: 0.8rem;
-          letter-spacing: 1px;
-          border-bottom: 1px solid rgba(0,0,0,0.1);
-          padding-bottom: 6px;
+        .subcategory-link {
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 8px;
+          color: rgba(255, 255, 255, 0.87);
+          text-decoration: none;
+          padding: 8px 12px;
+          border-radius: 4px;
+          transition: all 0.2s ease;
 
-          .category-icon {
-            fill: currentColor;
+          &:hover {
+            background: rgba(100, 181, 246, 0.1);
+            color: #64b5f6;
+            transform: translateX(4px);
+
+            mat-icon {
+              color: #64b5f6;
+              opacity: 1;
+            }
+          }
+
+          mat-icon {
+            font-size: 18px;
             opacity: 0.7;
           }
         }
-
-        .subcategory-list {
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-        }
-
-        a.mat-menu-item {
-          height: 32px;
-          line-height: 32px;
-          padding: 0 12px;
-          transition: background-color 0.2s ease;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 0.85rem;
-
-          .subcategory-icon {
-            fill: currentColor;
-            opacity: 0.6;
-          }
-
-          &:hover {
-            background-color: rgba(0, 0, 0, 0.04);
-
-            .subcategory-icon {
-              opacity: 0.8;
-            }
-          }
-        }
       }
+    }
+  }
 
-      // Mobile Responsiveness
-      @media screen and (max-width: 768px) {
-        flex-direction: column;
-        padding: 12px;
-        height: auto;
-
-        .category-column {
-          width: 100%;
-          margin-bottom: 12px;
-          padding: 0;
-
-          h3 {
-            font-size: 0.9rem;
-          }
-
-          a.mat-menu-item {
-            height: 40px;
-            line-height: 40px;
-            font-size: 0.95rem;
-          }
-        }
-      }
+  @media (max-width: 768px) {
+    .course-dropdown {
+      grid-template-columns: 1fr;
+      min-width: auto;
+      padding: 16px;
     }
   }
 }
@@ -266,6 +313,72 @@
   }
 }
 
+.course-dropdown, .shop-dropdown {
+  padding: 24px;
+  background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+  min-width: 300px;
+
+  .course-category, .shop-category {
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 500;
+
+      mat-icon {
+        color: #64b5f6;
+      }
+    }
+
+    .subcategories {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-left: 36px;
+
+      a {
+        color: rgba(255, 255, 255, 0.87);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: #64b5f6;
+
+          mat-icon {
+            color: #64b5f6;
+          }
+        }
+
+        mat-icon {
+          font-size: 18px;
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}
+
 // Responsive styles
 @media screen and (max-width: 768px) {
   .shop-megamenu {
@@ -294,23 +407,17 @@
     padding: 0 8px;
   }
 
-  .logo-section {
-    .menu-button {
-      display: block;
-    }
-  }
-
   .nav-links {
     position: fixed;
-    top: 64px;
+    top: 70px;
     left: 0;
     right: 0;
-    background: inherit;
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     flex-direction: column;
-    padding: 16px;
-    gap: 16px;
+    padding: 24px;
     transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
 
     &.nav-links-open {
       transform: translateX(0);
@@ -324,14 +431,14 @@
 
   .right-section {
     position: fixed;
-    top: 64px;
+    top: 70px;
     right: 0;
-    background: inherit;
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     flex-direction: column;
-    padding: 16px;
-    gap: 16px;
+    padding: 24px;
     transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
 
     &.right-section-open {
       transform: translateX(0);
@@ -428,7 +535,7 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 1rem;
-  background: white;
+  background: linear-gradient(135deg, #1a1a1a, #2c3e50);
 }
 
 .course-category {

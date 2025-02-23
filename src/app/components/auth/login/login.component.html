@@ -1,15 +1,19 @@
-<div class="login-container">
-  <div class="login-card">
+<div class="login-container" @fadeIn>
+  <div class="login-card" @slideIn>
     <h2>{{ 'AUTH.LOGIN.TITLE' | translate }}</h2>
+    <p class="subtitle">{{ 'AUTH.LOGIN.SUBTITLE' | translate }}</p>
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <mat-form-field appearance="outline">
         <mat-label>{{ 'AUTH.LOGIN.EMAIL' | translate }}</mat-label>
-        <input matInput type="email" formControlName="email" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate">
+        <input matInput type="email" formControlName="email" 
+               [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate">
+        <mat-icon matPrefix>email</mat-icon>
         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-          {{ 'CONTACT.VALIDATION.EMAIL_REQUIRED' | translate }}
+          {{ 'AUTH.VALIDATION.EMAIL_REQUIRED' | translate }}
         </mat-error>
         <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-          {{ 'CONTACT.VALIDATION.EMAIL_INVALID' | translate }}
+          {{ 'AUTH.VALIDATION.EMAIL_INVALID' | translate }}
         </mat-error>
       </mat-form-field>
 
@@ -17,24 +21,57 @@
         <mat-label>{{ 'AUTH.LOGIN.PASSWORD' | translate }}</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" 
                [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate">
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+        <mat-icon matPrefix>lock</mat-icon>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button"
+                [attr.aria-label]="'AUTH.LOGIN.TOGGLE_PASSWORD_VISIBILITY' | translate"
+                [attr.aria-pressed]="!hidePassword">
           <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-          {{ 'AUTH.LOGIN.PASSWORD_REQUIRED' | translate }}
+          {{ 'AUTH.VALIDATION.PASSWORD_REQUIRED' | translate }}
         </mat-error>
         <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
-          {{ 'AUTH.LOGIN.PASSWORD_MINLENGTH' | translate }}
+          {{ 'AUTH.VALIDATION.PASSWORD_MIN_LENGTH' | translate }}
         </mat-error>
       </mat-form-field>
 
-      <div class="error-message" *ngIf="errorMessage">
-        {{ errorMessage }}
+      <div class="form-options">
+        <mat-checkbox formControlName="rememberMe" color="primary">
+          {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
+        </mat-checkbox>
+        <a routerLink="/forgot-password" class="forgot-password">
+          {{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}
+        </a>
       </div>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
-        {{ (isLoading ? 'AUTH.LOGIN.LOADING' : 'AUTH.LOGIN.SUBMIT') | translate }}
+      <div class="error-message" *ngIf="errorMessage">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage | translate }}</span>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" 
+              [disabled]="loginForm.invalid || isLoading"
+              class="submit-button">
+        <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+        <span>{{ (isLoading ? 'AUTH.LOGIN.LOADING' : 'AUTH.LOGIN.SUBMIT') | translate }}</span>
       </button>
+
+      <div class="divider">
+        <mat-divider></mat-divider>
+        <span>{{ 'AUTH.LOGIN.OR' | translate }}</span>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="social-buttons">
+        <button mat-stroked-button type="button" class="google-button">
+          <mat-icon svgIcon="google"></mat-icon>
+          {{ 'AUTH.LOGIN.GOOGLE_SIGNIN' | translate }}
+        </button>
+        <button mat-stroked-button type="button" class="facebook-button">
+          <mat-icon svgIcon="facebook"></mat-icon>
+          {{ 'AUTH.LOGIN.FACEBOOK_SIGNIN' | translate }}
+        </button>
+      </div>
 
       <div class="register-link">
         {{ 'AUTH.LOGIN.REGISTER_PROMPT' | translate }}

@@ -1,13 +1,44 @@
 <mat-toolbar color="primary" class="header-toolbar">
   <div class="container">
     <div class="logo-section">
-      <a mat-button routerLink="/" class="logo">AlinoJ</a>
+      <div (click)="navigateToDashboard()" class="logo" style="cursor: pointer;">
+        <img src="assets/images/alinoj_logo.png" alt="AlinoJ Logo" class="logo-image">
+       
+      </div>
       <button mat-icon-button (click)="toggleMenu()" class="menu-button">
         <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
       </button>
     </div>
 
     <div class="nav-links" [class.nav-links-open]="isMenuOpen">
+      <!-- Courses Menu -->
+      <button mat-button [matMenuTriggerFor]="courseMenu">
+        <mat-icon>school</mat-icon>
+        {{ 'HEADER.COURSES' | translate }}
+      </button>
+      
+      <mat-menu #courseMenu="matMenu" class="full-width-menu courses-megamenu">
+        <div class="course-dropdown">
+          <ng-container *ngFor="let category of courseCategories">
+            <div class="course-category">
+              <div class="category-header">
+                <mat-icon>{{ category.icon }}</mat-icon>
+                <span>{{ category.name }}</span>
+              </div>
+              <div class="subcategories">
+                <a *ngFor="let subcategory of category.subcategories"
+                   [routerLink]="['/courses', category.name.toLowerCase(), subcategory.name.toLowerCase()]"
+                   (click)="coursesMenuTrigger.closeMenu()"
+                   class="subcategory-link">
+                  <mat-icon>{{subcategory.icon}}</mat-icon>
+                  <span>{{subcategory.name}}</span>
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-menu>
+
       <!-- Shop Menu -->
       <button mat-button 
               [matMenuTriggerFor]="shopMenu" 
@@ -53,39 +84,32 @@
       <a mat-button routerLink="/services" routerLinkActive="active">
         {{ 'HEADER.SERVICES' | translate }}
       </a>
-      <a mat-button routerLink="/portfolio" routerLinkActive="active">
+      <!-- <a mat-button routerLink="/portfolio" routerLinkActive="active">
         {{ 'HEADER.PORTFOLIO' | translate }}
       </a>
       <a mat-button routerLink="/tools" routerLinkActive="active">
         {{ 'HEADER.TOOLS' | translate }}
-      </a>
+      </a> -->
       <a mat-button routerLink="/contact" routerLinkActive="active">
         {{ 'HEADER.CONTACT' | translate }}
       </a>
-      <button mat-button [matMenuTriggerFor]="courseMenu">
-        Courses
-      </button>
-      
-      <mat-menu #courseMenu="matMenu" class="full-width-menu courses-megamenu">
-        <div class="course-dropdown">
-          <ng-container *ngFor="let category of courseCategories">
-            <div class="course-category">
-              <mat-icon>{{ category.icon }}</mat-icon>
-              <span>{{ category.name }}</span>
-              <div class="subcategories">
-                <a *ngFor="let sub of category.subcategories" [routerLink]="sub.route">
-                  <mat-icon>{{ sub.icon }}</mat-icon>
-                  {{ sub.name }}
-                </a>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      </mat-menu>
       
     </div>
 
     <div class="right-section" [class.right-section-open]="isMenuOpen">
+      <!-- Add language selector -->
+      <button mat-button [matMenuTriggerFor]="languageMenu" class="language-button">
+        <mat-icon>language</mat-icon>
+        {{ currentLang | uppercase }}
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <button mat-menu-item *ngFor="let lang of languages" 
+                (click)="switchLanguage(lang.code)"
+                [class.active]="currentLang === lang.code">
+          {{ lang.name }}
+        </button>
+      </mat-menu>
+
       <button mat-icon-button routerLink="/wishlist" class="wishlist-button">
         <mat-icon [matBadge]="wishlistItemCount" 
                  [matBadgeHidden]="wishlistItemCount === 0"
@@ -97,15 +121,6 @@
                  [matBadgeHidden]="cartItemCount === 0"
                  matBadgeColor="warn">shopping_cart</mat-icon>
       </button>
-
-      <button mat-button [matMenuTriggerFor]="languageMenu" class="language-button">
-        <mat-icon>language</mat-icon>
-        {{ 'HEADER.LANGUAGE' | translate }}
-      </button>
-      <mat-menu #languageMenu="matMenu">
-        <button mat-menu-item (click)="switchLanguage('en')">English</button>
-        <button mat-menu-item (click)="switchLanguage('ta')">தமிழ்</button>
-      </mat-menu>
 
       <ng-container *ngIf="!isLoggedIn; else userMenu">
         <button mat-button (click)="openLogin()" class="auth-button">

@@ -1,0 +1,56 @@
+<div class="about-container">
+  <!-- Hero Section -->
+  <section class="hero-section" @fadeIn>
+    <div class="hero-content">
+      <h1>{{ 'ABOUT.HERO.TITLE' | translate }}</h1>
+      <h2>{{ 'ABOUT.HERO.SUBTITLE' | translate }}</h2>
+      <p class="intro">{{ 'ABOUT.HERO.INTRO' | translate }}</p>
+    </div>
+  </section>
+
+  <!-- Who We Are Section -->
+  <section class="who-we-are" @slideIn>
+    <div class="section-content">
+      <h2>{{ 'ABOUT.WHO_WE_ARE.TITLE' | translate }}</h2>
+      <p>{{ 'ABOUT.WHO_WE_ARE.DESCRIPTION' | translate }}</p>
+    </div>
+  </section>
+
+  <!-- What We Do Section -->
+  <section class="what-we-do">
+    <h2>{{ 'ABOUT.WHAT_WE_DO.TITLE' | translate }}</h2>
+    <div class="cards-grid" @listAnimation>
+      <mat-card class="feature-card" *ngFor="let item of whatWeDo">
+        <mat-icon>{{item.icon}}</mat-icon>
+        <h3>{{ item.translationKey | translate }}</h3>
+        <p>{{ item.descriptionKey | translate }}</p>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Vision Section -->
+  <section class="vision-section" (intersectionObserver)="onIntersection($event)">
+    <div class="vision-content" [class.expanded]="visionState === 'expanded'" [class.collapsed]="visionState === 'collapsed'">
+      <h2>{{ 'ABOUT.VISION.TITLE' | translate }}</h2>
+      <p>{{ 'ABOUT.VISION.DESCRIPTION' | translate }}</p>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-choose-us">
+    <h2>{{ 'ABOUT.WHY_CHOOSE_US.TITLE' | translate }}</h2>
+    <div class="cards-grid" @listAnimation>
+      <mat-card class="feature-card" *ngFor="let item of whyChooseUs">
+        <mat-icon>{{item.icon}}</mat-icon>
+        <h3>{{ item.translationKey | translate }}</h3>
+        <p>{{ item.descriptionKey | translate }}</p>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section" @fadeIn>
+    <h2>{{ 'ABOUT.CTA.TITLE' | translate }}</h2>
+    <p>{{ 'ABOUT.CTA.DESCRIPTION' | translate }}</p>
+  </section>
+</div>

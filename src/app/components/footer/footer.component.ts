@@ -30,22 +30,22 @@ export class FooterComponent implements OnInit {
   
   currentYear = new Date().getFullYear();
 
-  companyLinks: FooterLink[] = [
-    { label: 'FOOTER.ABOUT_US', route: '/about', icon: 'info' },
-    { label: 'FOOTER.CONTACT_US', route: '/contact', icon: 'contact_mail' },
-    { label: 'FOOTER.CAREERS', route: '/careers', icon: 'work' }
+  companyLinks = [
+    { route: '/about', icon: 'info', label: 'FOOTER.LINKS.ABOUT' },
+    { route: '/careers', icon: 'work', label: 'FOOTER.LINKS.CAREERS' },
+    { route: '/contact', icon: 'contact_support', label: 'FOOTER.LINKS.CONTACT' }
   ];
 
-  legalLinks: FooterLink[] = [
-    { label: 'FOOTER.PRIVACY_POLICY', route: '/privacy', icon: 'privacy_tip' },
-    { label: 'FOOTER.TERMS_OF_SERVICE', route: '/terms', icon: 'gavel' },
-    { label: 'FOOTER.SITEMAP', route: '/sitemap', icon: 'map' }
+  learningLinks = [
+    { route: '/courses', icon: 'school', label: 'FOOTER.LINKS.COURSES' },
+    { route: '/tutorials', icon: 'menu_book', label: 'FOOTER.LINKS.TUTORIALS' },
+    { route: '/resources', icon: 'library_books', label: 'FOOTER.LINKS.RESOURCES' }
   ];
 
-  learningLinks: FooterLink[] = [
-    { label: 'FOOTER.COURSES', route: '/courses', icon: 'school' },
-    { label: 'FOOTER.LEARNING_PATHS', route: '/learning-paths', icon: 'track_changes' },
-    { label: 'FOOTER.RESOURCES', route: '/resources', icon: 'library_books' }
+  legalLinks = [
+    { route: '/privacy', icon: 'security', label: 'FOOTER.LINKS.PRIVACY' },
+    { route: '/terms', icon: 'gavel', label: 'FOOTER.LINKS.TERMS' },
+    { route: '/cookies', icon: 'cookie', label: 'FOOTER.LINKS.COOKIES' }
   ];
 
   socialLinks = [

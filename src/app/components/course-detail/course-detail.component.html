@@ -1,0 +1,163 @@
+<div class="course-detail-container" *ngIf="!loading && !error && course">
+  <div class="course-content">
+    <div class="course-header">
+      <div class="breadcrumb">
+        <a routerLink="/courses">Courses</a>
+        <span> / </span>
+        <span>{{course.title}}</span>
+      </div>
+      <h1>{{course.title}}</h1>
+      <div class="course-meta">
+        <span class="level-badge" [ngClass]="course.level.toLowerCase()">
+          <i class="fas fa-chart-line"></i>
+          {{course.level}}
+        </span>
+        <span>
+          <i class="fas fa-clock"></i>
+          {{course.duration}}
+        </span>
+        <span>
+          <i class="fas fa-globe"></i>
+          {{course.language}}
+        </span>
+        <span>
+          <i class="fas fa-folder"></i>
+          {{course.category}} / {{course.subcategory}}
+        </span>
+      </div>
+    </div>
+
+    <div class="course-grid">
+      <div class="main-content">
+        <section class="description">
+          <h2>Course Overview</h2>
+          <p>{{course.description}}</p>
+        </section>
+
+        <section class="highlights">
+          <h2>What You'll Learn</h2>
+          <div class="highlights-grid">
+            <div class="highlight-item" *ngFor="let highlight of course.highlights">
+              <i class="fas fa-check-circle"></i>
+              <span>{{highlight}}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="syllabus">
+          <h2>Course Syllabus</h2>
+          <div class="syllabus-modules">
+            <div class="module" *ngFor="let module of course.syllabus">
+              <div class="module-header">
+                <h3>{{module.title}}</h3>
+              </div>
+              <ul class="module-topics">
+                <li *ngFor="let topic of module.topics">
+                  <i class="fas fa-circle"></i>
+                  {{topic}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="projects" *ngIf="course.projects && course.projects.length > 0">
+          <h2>Projects You'll Build</h2>
+          <div class="projects-grid">
+            <div class="project-card" *ngFor="let project of course.projects">
+              <h3>{{project.title}}</h3>
+              <p>{{project.description}}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="target-audience" *ngIf="course.targetAudience && course.targetAudience.length > 0">
+          <h2>Who Should Take This Course</h2>
+          <ul class="audience-list">
+            <li *ngFor="let audience of course.targetAudience">
+              <i class="fas fa-user"></i>
+              {{audience}}
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="sidebar">
+        <div class="enrollment-card">
+          <div class="price">
+            <span class="amount">${{course.price}}</span>
+            <span class="duration">{{course.duration}} course</span>
+          </div>
+          <button mat-raised-button color="primary" class="enroll-button" (click)="handleEnrollClick()">
+            <i class="fas fa-graduation-cap"></i>
+            Enroll Now
+          </button>
+
+          <div class="instructor">
+            <h3>Instructor</h3>
+            <div class="instructor-info">
+              <img [src]="course.instructor.image" [alt]="course.instructor.name">
+              <div class="instructor-details">
+                <h4>{{course.instructor.name}}</h4>
+                <p class="title">{{course.instructor.title}}</p>
+                <p class="bio">{{course.instructor.bio}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="schedule" *ngIf="course.schedule">
+            <h3>Schedule Details</h3>
+            <ul class="schedule-details">
+              <li>
+                <i class="fas fa-calendar"></i>
+                <span>{{course.schedule.duration}}</span>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>{{course.schedule.sessionsPerWeek}} sessions per week</span>
+              </li>
+              <li>
+                <i class="fas fa-hourglass-half"></i>
+                <span>{{course.schedule.sessionDuration}} per session</span>
+              </li>
+            </ul>
+            <div class="batch-types">
+              <h4>Available Batches:</h4>
+              <ul>
+                <li *ngFor="let batch of course.schedule.batchTypes">{{batch}}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="includes">
+            <h3>This Course Includes</h3>
+            <ul>
+              <li><i class="fas fa-video"></i> Full lifetime access</li>
+              <li><i class="fas fa-mobile-alt"></i> Access on mobile and desktop</li>
+              <li><i class="fas fa-certificate"></i> Certificate of completion</li>
+              <li><i class="fas fa-comments"></i> Community support</li>
+              <li><i class="fas fa-file-download"></i> Downloadable resources</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-state" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <p>Loading course details...</p>
+</div>
+
+<div class="error-state" *ngIf="error">
+  <div class="error-content">
+    <i class="fas fa-exclamation-circle"></i>
+    <h2>Oops! Something went wrong</h2>
+    <p>{{error}}</p>
+    <button mat-raised-button color="primary" routerLink="/courses">
+      <i class="fas fa-arrow-left"></i>
+      Back to Courses
+    </button>
+  </div>
+</div>

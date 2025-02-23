@@ -41,15 +41,22 @@ export class CartComponent implements OnInit {
   private loadCartItems() {
     this.cartService.getCartItems().subscribe({
       next: (items) => {
-        this.cartItems = items;
+        // Filter out items with invalid products
+        this.cartItems = items.filter(item => item && item.product);
         this.updateTotal();
+        
+        // Show warning if some items were filtered out
+        const invalidItems = items.filter(item => !item || !item.product);
+        if (invalidItems.length > 0) {
+          this.showWarning(`${invalidItems.length} invalid item(s) were removed from your cart`);
+        }
       },
       error: (error) => {
         console.error('Error loading cart:', error);
         if (error.status === 401) {
           this.showError('Please log in to view your cart');
         } else {
-          this.showError('Failed to load cart items');
+          this.showError('Error loading cart items');
         }
       }
     });
@@ -67,65 +74,83 @@ export class CartComponent implements OnInit {
 
   private updateTotal() {
     this.total = this.cartItems.reduce((sum, item) => {
+      if (!item?.product) return sum;
       const price = item.product.sellingPrice || item.product.price || 0;
-      return sum + (price * item.quantity);
+      return sum + (price * (item.quantity || 0));
     }, 0);
   }
 
   updateQuantity(item: CartItem, newQuantity: number) {
-    const productId = item.product._id || item.product.id;
+    const productId = item?.product?._id || item?.product?.id;
     if (!productId) {
-      this.showError('Invalid product');
+      console.error('Invalid product in cart:', item);
+      this.showError('Unable to update quantity. Please try removing and adding the item again.');
       return;
     }
 
     if (newQuantity < 1) {
-      this.showError('Quantity must be at least 1');
+      this.removeFromCart(item);
       return;
     }
 
-    if (newQuantity > (item.product.stock || 0)) {
-      this.showError('Not enough stock available');
+    if (item.product.stock && newQuantity > item.product.stock) {
+      this.showError(`Only ${item.product.stock} items available in stock`);
       return;
     }
 
-    // Now productId is guaranteed to be a string
-    this.cartService.updateQuantity(productId as string, newQuantity).subscribe({
-      next: () => {
-        this.loadCartItems(); // Reload cart after update
+    this.cartService.updateQuantity(productId, newQuantity).subscribe({
+      next: (items) => {
+        this.cartItems = items;
+        this.updateTotal();
       },
       error: (error) => {
         console.error('Error updating quantity:', error);
-        this.showError(error.message || 'Failed to update quantity');
+        this.showError('Failed to update quantity. Please try again.');
       }
     });
   }
 
-  removeItem(item: CartItem) {
-    const productId = item.product._id || item.product.id;
+  removeFromCart(item: CartItem) {
+    const productId = item?.product?._id || item?.product?.id;
     if (!productId) {
-      this.showError('Invalid product');
+      console.error('Invalid product in cart:', item);
+      this.showError('Unable to remove item. Please refresh the page and try again.');
       return;
     }
 
-    // Now productId is guaranteed to be a string
-    this.cartService.removeFromCart(productId as string).subscribe({
-      next: () => {
-        this.loadCartItems(); // Reload cart after removal
+    this.cartService.removeFromCart(productId).subscribe({
+      next: (items) => {
+        this.cartItems = items;
+        this.updateTotal();
+        this.showSuccess('Item removed from cart');
       },
       error: (error) => {
         console.error('Error removing item:', error);
-        this.showError(error.message || 'Failed to remove item');
+        this.showError('Failed to remove item. Please try again.');
       }
     });
   }
 
   private showError(message: string) {
     this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['error-snackbar']
+    });
+  }
+
+  private showWarning(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['warning-snackbar']
+    });
+  }
+
+  private showSuccess(message: string) {
+    this.snackBar.open(message, 'Close', {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: ['error-snackbar']
+      panelClass: ['success-snackbar']
     });
   }
 }

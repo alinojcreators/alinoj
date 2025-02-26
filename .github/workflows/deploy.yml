@@ -1,0 +1,70 @@
+name: Deploy MEAN Stack to EC2
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  PUBLIC_IP: 3.82.106.126
+  PRIVATE_IP: 172.31.82.52
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install Frontend Dependencies
+      run: |
+        npm install
+        
+    - name: Build Angular App
+      run: |
+        npm run build --configuration=production
+        
+    - name: Install Backend Dependencies
+      working-directory: ./backend
+      run: |
+        npm install
+        
+    - name: Setup PM2
+      run: |
+        sudo npm install -g pm2
+        
+    - name: Deploy Application
+      run: |
+        # Deploy Angular frontend
+        sudo rm -rf /var/www/html/angular-app/*
+        sudo cp -r dist/alinoj/* /var/www/html/angular-app/
+        
+        # Deploy Node.js backend
+        sudo mkdir -p /var/www/backend
+        sudo cp -r backend/* /var/www/backend/
+        
+        # Copy and update environment file
+        if [ -f backend/.env ]; then
+          sudo cp backend/.env /var/www/backend/
+          # Update IPs in .env file
+          sudo sed -i "s/PRIVATE_IP=.*/PRIVATE_IP=$PRIVATE_IP/" /var/www/backend/.env
+          sudo sed -i "s/PUBLIC_IP=.*/PUBLIC_IP=$PUBLIC_IP/" /var/www/backend/.env
+        fi
+        
+        # Set proper permissions
+        sudo chown -R www-data:www-data /var/www/html/angular-app
+        sudo chown -R www-data:www-data /var/www/backend
+        
+        # Start/Restart Backend with PM2
+        cd /var/www/backend
+        pm2 delete backend || true
+        pm2 start server.js --name backend --env production
+        pm2 save
+        
+        # Restart Nginx
+        sudo systemctl restart nginx

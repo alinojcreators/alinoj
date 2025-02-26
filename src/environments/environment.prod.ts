@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-api-url.com/api/users'
+  apiUrl: 'http://3.82.106.126/api'  // Public IP for client-side access
 };

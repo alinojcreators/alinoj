@@ -18,6 +18,7 @@ import { ShopCategoryComponent } from './components/shop/category/shop-category/
 import { ProductMasterComponent } from './components/shop/product-master/product-master.component';
 import { CartComponent } from './components/shop/cart/cart.component';
 import { WishlistComponent } from './services/shop/wishlist/wishlist.component';
+import { CheckoutComponent } from './components/shop/checkout/checkout.component';
 
 export const routes: Routes = [
   { 
@@ -82,6 +83,10 @@ export const routes: Routes = [
   {
     path: 'shop/:category',
     component: ShopCategoryComponent
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent
   },
   {
     path: 'courses',

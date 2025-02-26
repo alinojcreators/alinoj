@@ -1,41 +1,108 @@
 .software-skills-card {
-    margin: 16px auto;
- 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Adds a subtle shadow
-    border-radius: 8px; // Rounds the corners
-    background-color: #f9f9f9; // Light background color for the card
-    padding: 16px;
+  max-width: 1200px;
+  margin: 24px auto;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: #ffffff;
+  padding: 32px;
   
+  mat-card-title {
+    margin-bottom: 24px;
+    text-align: center;
+
     h2 {
-      font-size: 24px;
-      font-weight: bold;
-      color: #3f51b5; // Matches Angular Material primary color
-      text-align: center;
-      margin-bottom: 12px;
-    }
-  
-    ul.dev-icons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      list-style: none;
-      padding: 0;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #2c3e50;
       margin: 0;
-  
-      li.software-skill-inline {
-        margin: 8px;
-        display: flex;
-        align-items: center;
-  
-        img {
-          height: 30px; // Consistent size for icons
-          transition: transform 0.3s ease; // Adds hover effect
-        }
-  
-        &:hover img {
-          transform: scale(1.1); // Slight zoom on hover
-        }
+      position: relative;
+      display: inline-block;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: #3f51b5;
+        border-radius: 2px;
       }
     }
   }
-  
+
+  mat-card-content {
+    p {
+      text-align: center;
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  ul.dev-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+
+    li {
+      transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+      }
+
+      img {
+        height: 30px;
+        width: auto;
+        display: block;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .software-skills-card {
+    margin: 16px;
+    padding: 24px;
+
+    mat-card-title h2 {
+      font-size: 1.75rem;
+    }
+
+    mat-card-content p {
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    ul.dev-icons {
+      gap: 8px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .software-skills-card {
+    padding: 16px;
+
+    mat-card-title h2 {
+      font-size: 1.5rem;
+    }
+
+    ul.dev-icons {
+      gap: 6px;
+    }
+  }
+}

@@ -186,4 +186,18 @@ export class CartService implements OnDestroy {
       })
     );
   }
+
+  clearCart(): Observable<CartItem[]> {
+    return this.http.delete<CartItem[]>(`${this.apiUrl}/clear`, this.getAuthHeaders())
+      .pipe(
+        tap(items => {
+          this.cartItems.next([]);
+          this.cartTotal.next(0);
+        }),
+        catchError(error => {
+          console.error('Error clearing cart:', error);
+          throw error;
+        })
+      );
+  }
 }

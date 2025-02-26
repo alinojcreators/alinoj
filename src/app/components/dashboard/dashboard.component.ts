@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { ToolsComponent } from '../tools/tools.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Meta, Title } from '@angular/platform-browser';
 
 interface ServiceCard {
   icon: string;
@@ -77,9 +78,9 @@ export class DashboardComponent implements OnInit {
   currentLang = 'en';
   currentIndex = 0;
   images = [
-    'assets/images/slider1.jpg',
-    'assets/images/slider2.jpg',
-    'assets/images/slider3.jpg'
+    'assets/images/alinoj_logo.png',
+    'assets/images/ai.jpg',
+    'assets/images/angular1.png'
   ];
 
   whatWeDo: ServiceCard[] = [
@@ -105,15 +106,44 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private meta: Meta,
+    private title: Title,
+    private translate: TranslateService
+  ) {
     this.currentLang = this.translate.currentLang;
   }
 
   ngOnInit(): void {
+    this.setupSEO();
     // Start the image slider
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
     }, 5000);
+  }
+
+  private setupSEO() {
+    const title = 'Dashboard - Alinoj Creators';
+    const description = 'Access your creative workspace on Alinoj Creators. Manage your projects, courses, and digital content all in one place.';
+    const keywords = 'dashboard, creator workspace, digital projects, content management, Alinoj Creators';
+
+    this.title.setTitle(title);
+    
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ name: 'keywords', content: keywords });
+    
+    // OpenGraph
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:url', content: 'https://alinoj.com/dashboard' });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:image', content: 'assets/images/alinoj-dashboard-preview.jpg' });
+    
+    // Twitter
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: 'assets/images/alinoj-dashboard-preview.jpg' });
   }
 
   switchLanguage(lang: string): void {

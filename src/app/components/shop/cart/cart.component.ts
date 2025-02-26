@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CartService } from '../../../services/shop/cart.services';
 import { CartItem } from '../../../services/shop/cart.services';
 
@@ -31,7 +32,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -129,6 +131,14 @@ export class CartComponent implements OnInit {
         this.showError('Failed to remove item. Please try again.');
       }
     });
+  }
+
+  proceedToCheckout() {
+    if (this.cartItems.length === 0) {
+      this.showError('Your cart is empty');
+      return;
+    }
+    this.router.navigate(['/checkout']);
   }
 
   private showError(message: string) {

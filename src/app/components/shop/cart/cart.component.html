@@ -59,7 +59,7 @@
           <span>Total</span>
           <span class="total">{{total | currency}}</span>
         </div>
-        <button mat-raised-button color="primary" class="checkout-button">
+        <button mat-raised-button color="primary" class="checkout-button" (click)="proceedToCheckout()">
           Proceed to Checkout
         </button>
       </div>

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { IntersectionObserverDirective } from '../../shared/directives/intersection-observer.directive';
+import { Meta, Title } from '@angular/platform-browser';
 
 import { trigger, transition, style, animate, query, stagger, state } from '@angular/animations';
 
@@ -56,7 +57,7 @@ import { trigger, transition, style, animate, query, stagger, state } from '@ang
     ])
   ]
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
   visionState: 'expanded' | 'collapsed' = 'collapsed';
 
   whatWeDo = [
@@ -157,6 +158,39 @@ export class AboutComponent {
       description: 'Reached 1 million satisfied customers and established seller network.'
     }
   ];
+
+  constructor(
+    private meta: Meta,
+    private title: Title
+  ) {}
+
+  ngOnInit() {
+    this.setupSEO();
+  }
+
+  private setupSEO() {
+    const title = 'About Us - Alinoj Creators';
+    const description = 'Learn about Alinoj Creators - empowering digital creators with innovative tools and platforms for content creation and management.';
+    const keywords = 'about Alinoj, creator platform, digital innovation, content creation tools, creative solutions';
+
+    this.title.setTitle(title);
+    
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ name: 'keywords', content: keywords });
+    
+    // OpenGraph
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:url', content: 'https://alinoj.com/about' });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:image', content: 'assets/images/alinoj-about-preview.jpg' });
+    
+    // Twitter
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: 'assets/images/alinoj-about-preview.jpg' });
+  }
 
   onIntersection(event: IntersectionObserverEntry[]) {
     if (event[0].isIntersecting) {

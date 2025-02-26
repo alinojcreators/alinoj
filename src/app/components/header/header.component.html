@@ -1,10 +1,9 @@
 <mat-toolbar color="primary" class="header-toolbar">
   <div class="container">
     <div class="logo-section">
-      <div (click)="navigateToDashboard()" class="logo" style="cursor: pointer;">
+      <button mat-button (click)="navigateToDashboard()" class="logo">
         <img src="assets/images/alinoj_logo.png" alt="AlinoJ Logo" class="logo-image">
-       
-      </div>
+      </button>
       <button mat-icon-button (click)="toggleMenu()" class="menu-button">
         <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
       </button>
@@ -73,10 +72,10 @@
         </div>
       </mat-menu>
 
-      <a mat-button routerLink="/shop" routerLinkActive="active" class="nav-link">
+      <!-- <a mat-button routerLink="/shop" routerLinkActive="active" class="nav-link">
         <mat-icon>store</mat-icon>
         {{ 'HEADER.SHOP' | translate }}
-      </a>
+      </a> -->
 
       <a mat-button routerLink="/about" routerLinkActive="active">
         {{ 'HEADER.ABOUT' | translate }}

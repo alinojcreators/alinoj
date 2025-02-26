@@ -1,0 +1,114 @@
+<div class="checkout-container">
+  <h2>Checkout</h2>
+
+  <mat-stepper linear>
+    <!-- Review Cart Step -->
+    <mat-step label="Review Cart">
+      <div class="cart-review">
+        <mat-card *ngFor="let item of cartItems" class="cart-item">
+          <mat-card-content>
+            <div class="item-details">
+              <h3>{{item.product.name}}</h3>
+              <p>Quantity: {{item.quantity}}</p>
+              <p>Price: {{(item.product.sellingPrice || item.product.price) | currency}}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <p>Total: {{total | currency}}</p>
+        </div>
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- Shipping Information Step -->
+    <mat-step [stepControl]="shippingForm" label="Shipping Information">
+      <form [formGroup]="shippingForm">
+        <!-- Address Selection -->
+        <div class="address-selection" *ngIf="savedAddresses.length > 0">
+          <mat-radio-group formControlName="useExistingAddress" class="address-radio-group">
+            <mat-radio-button value="existing">Use Saved Address</mat-radio-button>
+            <mat-radio-button value="new">Add New Address</mat-radio-button>
+          </mat-radio-group>
+
+          <!-- Saved Addresses -->
+          <div *ngIf="shippingForm.get('useExistingAddress')?.value === 'existing'" class="saved-addresses">
+            <mat-form-field appearance="fill">
+              <mat-label>Select Saved Address</mat-label>
+              <mat-select formControlName="savedAddressId">
+                <mat-option *ngFor="let address of savedAddresses" [value]="address">
+                  {{address.fullName}} - {{address.address}}, {{address.city}}
+                  <span *ngIf="address.isDefault">(Default)</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- New Address Form -->
+        <div formGroupName="newAddress" *ngIf="shippingForm.get('useExistingAddress')?.value !== 'existing'" class="new-address-form">
+          <mat-form-field appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>ZIP Code</mat-label>
+            <input matInput formControlName="zipCode" required>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Payment Information Step -->
+    <mat-step [stepControl]="paymentForm" label="Payment Information">
+      <form [formGroup]="paymentForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Card Number</mat-label>
+          <input matInput formControlName="cardNumber" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Expiry Date (MM/YY)</mat-label>
+          <input matInput formControlName="expiryDate" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>CVV</mat-label>
+          <input matInput formControlName="cvv" required>
+        </mat-form-field>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!shippingForm.valid || !paymentForm.valid">
+            Place Order
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

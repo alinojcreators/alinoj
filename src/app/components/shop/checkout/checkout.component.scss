@@ -1,0 +1,84 @@
+.checkout-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.cart-review {
+  margin-bottom: 20px;
+
+  .cart-item {
+    margin-bottom: 10px;
+  }
+
+  .order-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 20px 0;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  h3 {
+    margin: 0;
+  }
+}
+
+.address-selection {
+  margin-bottom: 20px;
+
+  .address-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+}
+
+.saved-addresses {
+  margin-top: 15px;
+}
+
+.new-address-form {
+  margin-top: 15px;
+}
+
+button {
+  margin-right: 8px;
+}
+
+// Make form fields full width
+mat-form-field {
+  width: 100%;
+}
+
+// Style the stepper
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+// Style the radio buttons
+::ng-deep .mat-radio-button {
+  margin: 5px 0;
+}

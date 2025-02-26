@@ -46,11 +46,11 @@
   gap: 16px;
 
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px;
-    transition: all 0.3s ease;
+    min-width: auto;
+    padding: 0;
+    line-height: normal;
+    border: none;
+    background: none;
 
     &:hover {
       opacity: 0.9;

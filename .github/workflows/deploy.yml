@@ -22,13 +22,17 @@ jobs:
       with:
         node-version: '18'
         
+    - name: Install Angular CLI
+      run: |
+        sudo npm install -g @angular/cli
+        
     - name: Install Frontend Dependencies
       run: |
-        npm ci
+        npm ci --legacy-peer-deps
         
     - name: Build Angular App
       run: |
-        npm run build --configuration=production
+        ng build --configuration=production
         
     - name: Install Backend Dependencies
       working-directory: ./backend

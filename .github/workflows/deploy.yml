@@ -22,17 +22,24 @@ jobs:
       with:
         node-version: '18'
         
+    - name: Clear npm cache and remove node_modules
+      run: |
+        npm cache clean --force
+        rm -rf node_modules
+        rm -rf package-lock.json
+        
     - name: Install Angular CLI
       run: |
         sudo npm install -g @angular/cli
         
     - name: Install Frontend Dependencies
       run: |
-        npm ci --legacy-peer-deps
+        npm install
+        npm install --save-dev @angular-devkit/build-angular
         
     - name: Build Angular App
       run: |
-        ng build --configuration=production
+        npm run build:prod
         
     - name: Install Backend Dependencies
       working-directory: ./backend

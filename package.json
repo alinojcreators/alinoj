@@ -9,7 +9,7 @@
     "build": "ng build",
  "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:prod": "ng build --configuration=production && node build/post-build.js",
+  "build:prod": "export NODE_OPTIONS='--max-old-space-size=4096' && ng build --configuration=production-light && node build/post-build.js",
     "postbuild": "node build/post-build.js"
   },
   "private": true,
